@@ -6,6 +6,10 @@ export const locales = {
         'Hello buddy! How is it going? 😎',
         "Hey there! I'm using Botonic. 🤖",
       ],
+      explanation: [
+        "I'm a bot who was been trained with some intents, so I have learnt from examples.",
+      ],
+      tryMe: ['Try to tell me something. Check the menu for more info 😙'],
     },
     farewell: [
       'See you later, aligator! 🐊',
@@ -18,16 +22,20 @@ export const locales = {
       'Thank you for making my day more enjoyable. I was getting bored lost in my server. 😪',
     ],
     getDirections: [
-      'This is what I can tell you so far.',
+      'This is all I have been able to discover.',
       'This is all I have found.',
-      'Maybe this can be of your interest.',
+      'You seem to be here more or less.',
     ],
     jokes: [
       'What about this one? 😆',
       'Today you are naughty. I like it. 😈',
       "I have this one up my sleeve. I promise I'm not using any kind of API. 🙈",
     ],
+    jokesError: [
+      "I'm sorry. I could not find anything in those servers. I'm a mess. 😢",
+    ],
     weather: [
+      'This is what I can tell you so far.',
       'I hope this can be useful.',
       'This is all I have been able to discover.',
     ],

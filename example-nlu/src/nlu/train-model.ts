@@ -7,6 +7,7 @@ import { LSTMLayerArgs, ModelCompileArgs } from '@tensorflow/tfjs-layers/dist'
 import { tokenizer } from './preprocessing-tools/tokenizer'
 import { DefaultNormalizer } from './preprocessing-tools/normalizer'
 import { LSTMModel } from './lstm-model'
+import { readdirSync } from 'fs'
 
 // General
 const LANGUAGE = 'en'
@@ -18,6 +19,7 @@ const UTTERANCES_PATH = join(
   LANGUAGE
 )
 const MAX_SEQ_LEN = 20
+const INTENTS_COUNT = readdirSync(UTTERANCES_PATH).length
 
 // Model Config
 const LAYERS_CONFIG = {
@@ -27,7 +29,7 @@ const LAYERS_CONFIG = {
     recurrentDropout: 0.4,
   } as LSTMLayerArgs,
   DENSE: {
-    units: 6,
+    units: INTENTS_COUNT,
     activation: 'softmax',
   } as DenseLayerArgs,
 }

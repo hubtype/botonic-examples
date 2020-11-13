@@ -21,7 +21,10 @@
     "@babel/runtime": "^7.6.2",
     "@botonic/plugin-nlu": "0.16.0-alpha.1",
     "@botonic/react": "0.16.0-alpha.1",
-    "natural": "^2.1.5"
+    "axios": "^0.21.0",
+    "leaflet": "^1.7.1",
+    "natural": "^2.1.5",
+    "react-leaflet": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

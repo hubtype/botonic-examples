@@ -6,6 +6,12 @@ export default class extends React.Component {
 
   render() {
     let _ = this.context.getString
-    return <Text>{_('greetings.intro')}</Text>
+    return (
+      <>
+        <Text>{_('greetings.intro')}</Text>
+        <Text>{_('greetings.explanation')}</Text>
+        <Text>{_('greetings.tryMe')}</Text>
+      </>
+    )
   }
 }
