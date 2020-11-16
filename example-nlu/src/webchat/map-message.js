@@ -1,6 +1,11 @@
 import { customMessage, WebchatContext } from '@botonic/react'
 import React from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+
+let MapContainer, TileLayer
+if (typeof window !== 'undefined') {
+  MapContainer = require('react-leaflet').MapContainer
+  TileLayer = require('react-leaflet').TileLayer
+}
 
 class MapMessage extends React.Component {
   static contextType = WebchatContext
@@ -9,19 +14,21 @@ class MapMessage extends React.Component {
   }
 
   render() {
-    return (
-      <MapContainer
-        center={[this.props.lat, this.props.lon]}
-        zoom={14}
-        scrollWheelZoom={false}
-        style={{ height: 200, width: 200 }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        />
-      </MapContainer>
-    )
+    if (typeof window !== 'undefined')
+      return (
+        <MapContainer
+          center={[this.props.lat, this.props.lon]}
+          zoom={14}
+          scrollWheelZoom={false}
+          style={{ height: 200, width: 200 }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+        </MapContainer>
+      )
+    else return null
   }
 }
 
