@@ -1,1 +1,3 @@
-export const webviews = []
+import WebviewReserva from './components/check-reservations'
+
+export const webviews = [WebviewReserva]
