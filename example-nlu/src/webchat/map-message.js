@@ -12,7 +12,7 @@ class MapMessage extends React.Component {
     return (
       <MapContainer
         center={[this.props.lat, this.props.lon]}
-        zoom={13}
+        zoom={14}
         scrollWheelZoom={false}
         style={{ height: 200, width: 200 }}
       >

@@ -9,7 +9,7 @@ export const locales = {
       explanation: [
         "I'm a bot who was been trained with some intents, so I have learnt from examples.",
       ],
-      tryMe: ['Try to tell me something. Check the menu for more info 😙'],
+      tryMe: ['Now try to say me something. 😙'],
     },
     farewell: [
       'See you later, aligator! 🐊',
@@ -18,13 +18,18 @@ export const locales = {
     ],
     thanks: [
       "You're welcome. I hope I made your day a little bit more exciting. 🙌",
-      'Thanks. You are a treasure. 💎',
+      "Don't mention it. You are a treasure. 💎",
       'Thank you for making my day more enjoyable. I was getting bored lost in my server. 😪',
     ],
     getDirections: [
       'This is all I have been able to discover.',
       'This is all I have found.',
       'You seem to be here more or less.',
+    ],
+    getDirectionsSuggestion: [
+      'I suggest you to pick the nearest metro from here.',
+      'My recommendation would be to order a taxi to go there faster.',
+      'What about picking the Bus 78? You will be saving some time.',
     ],
     jokes: [
       'What about this one? 😆',

@@ -8,14 +8,12 @@ export default class extends React.Component {
 
   render() {
     let _ = this.context.getString
-    const locationInfo = this.context.session.user.locationInfo
 
     return (
       <>
         <Text>{_('getDirections')}</Text>
-        {locationInfo.lat && locationInfo.lon && (
-          <MapMessage lat={locationInfo.lat} lon={locationInfo.lon} />
-        )}
+        <MapMessage lat={41.385} lon={2.173} />
+        <Text>{_('getDirectionsSuggestion')}</Text>
       </>
     )
   }
