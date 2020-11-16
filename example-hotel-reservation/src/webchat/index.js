@@ -12,6 +12,7 @@ import CheckReservationsWebview from '../webviews/components/check-reservations'
 
 export const webchat = {
   storage: sessionStorage,
+  storageKey: 'botonic-hotel-reservation-example',
   coverComponent: CustomCover,
 
   theme: {

@@ -6,11 +6,13 @@ import { CustomHeader } from './custom-header'
 import { PRIMARY_COLOR } from './constants'
 
 export const webchat = {
+  storage: sessionStorage,
+  storageKey: 'botonic-nlu-example',
+
   onInit: app => {
     app.open()
   },
   onOpen: app => app.addUserText('hi'),
-
   theme: {
     style: {
       fontFamily: '"Helvetica Neue",Arial,sans-serif',
