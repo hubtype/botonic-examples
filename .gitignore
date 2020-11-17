@@ -18,3 +18,4 @@ yalc.lock
 coverage.data
 coverage/
 .idea
+.botonic.json

@@ -9,7 +9,9 @@ export const locales = {
       explanation: [
         "I'm a bot who was been trained with some intents, so I have learnt from examples.",
       ],
-      tryMe: ['Now try to say me something. 😙'],
+      tryMe: [
+        "Now try to text me, as for example: 'what's the weather like?' 😙",
+      ],
     },
     farewell: [
       'See you later, aligator! 🐊',
