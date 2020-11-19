@@ -1,5 +1,5 @@
 {
-  "name": "nlu",
+  "name": "example-nlu",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --env.target=all --mode=production",

@@ -78,11 +78,11 @@ export default class CustomCover extends React.Component {
     return !this.state.email.match(emailRegex) || this.state.email == ''
   }
 
-  handleName = (event) => {
+  handleName = event => {
     this.setState({ name: event.target.value })
   }
 
-  handleEmail = (event) => {
+  handleEmail = event => {
     this.setState({ email: event.target.value })
     this.setState({ error: false })
   }
@@ -110,6 +110,11 @@ export default class CustomCover extends React.Component {
           errorMessage={'Please use a valid Email format'}
         />
         <Button onClick={() => this.close()}>START</Button>
+        <p style={{ fontSize: 10 }}>
+          <em>
+            We will not store the fulfilled information. You can fake the data.
+          </em>
+        </p>
       </Container>
     )
   }

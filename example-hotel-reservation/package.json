@@ -1,5 +1,5 @@
 {
-  "name": "blank",
+  "name": "example-booking-platform",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --env.target=all --mode=production",
