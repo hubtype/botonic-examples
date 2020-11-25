@@ -1,4 +1,5 @@
 import { BotonicNLU } from '@botonic/nlu'
+import { WordEmbeddingsConfig } from '@botonic/nlu/dist/types'
 import { join } from 'path'
 import { train } from '@tensorflow/tfjs-node'
 import { DenseLayerArgs } from '@tensorflow/tfjs-layers/dist/layers/core'
@@ -21,7 +22,29 @@ const UTTERANCES_PATH = join(
 const MAX_SEQ_LEN = 20
 const INTENTS_COUNT = readdirSync(UTTERANCES_PATH).length
 
+const nlu = new BotonicNLU({
+  tokenizer: tokenizer,
+  normalizer: new DefaultNormalizer(),
+})
+const data = nlu.readData({
+  path: UTTERANCES_PATH,
+  language: LANGUAGE,
+  maxSeqLen: MAX_SEQ_LEN,
+})
+const [xTrain, xTest, yTrain, yTest] = nlu.trainTestSplit({
+  data: data,
+  testPercentage: 0.15,
+  stratify: false,
+})
+
 // Model Config
+const WE_CONFIG = {
+  language: LANGUAGE,
+  dimension: 50,
+  type: 'glove',
+  vocabulary: nlu.vocabulary,
+} as WordEmbeddingsConfig
+
 const LAYERS_CONFIG = {
   LSTM: {
     units: 32,
@@ -45,28 +68,9 @@ const MODEL_COMPILE_ARGS = {
 const EPOCHS = 16
 
 ;(async () => {
-  const nlu = new BotonicNLU({
-    tokenizer: tokenizer,
-    normalizer: new DefaultNormalizer(),
-  })
-  const data = nlu.readData({
-    path: UTTERANCES_PATH,
-    language: LANGUAGE,
-    maxSeqLen: MAX_SEQ_LEN,
-  })
-  const [xTrain, xTest, yTrain, yTest] = nlu.trainTestSplit({
-    data: data,
-    testPercentage: 0.15,
-    stratify: false,
-  })
   nlu.model = await LSTMModel(
     MAX_SEQ_LEN,
-    {
-      language: LANGUAGE,
-      dimension: 50,
-      type: 'glove',
-      vocabulary: nlu.vocabulary,
-    },
+    WE_CONFIG,
     LAYERS_CONFIG,
     MODEL_COMPILE_ARGS
   )
