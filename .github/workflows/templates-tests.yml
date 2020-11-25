@@ -23,50 +23,50 @@ jobs:
       - name: tutorial blank build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/blank
+          TEST_PATH: blank
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial childs build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/childs
+          TEST_PATH: childs
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial custom-webchat build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/custom-webchat
+          TEST_PATH: custom-webchat
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial dynamic-carousel build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/dynamic-carousel
+          TEST_PATH: dynamic-carousel
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial dynamic-carousel build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/dynamic-carousel
+          TEST_PATH: dynamic-carousel
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial dynamodb build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/dynamodb
+          TEST_PATH: dynamodb
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial handoff build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/handoff
+          TEST_PATH: handoff
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial intent build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/intent
+          TEST_PATH: intent
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial nlu build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/nlu
+          TEST_PATH: nlu
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial template build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: templates/tutorial
+          TEST_PATH: tutorial
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
