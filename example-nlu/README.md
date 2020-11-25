@@ -33,7 +33,7 @@ This example shows you how to train a a model using Botonic NLU and take profit 
 
 1. From your command line, download the example by running:
    ```bash
-   $ botonic new myNluAssistant nlu-assistant
+   $ botonic new <botName> nlu-assistant
    ```
 2. `cd` into `myNluAssistant` directory that has been created.
 3. Run `botonic serve` to test it in your local machine.
@@ -76,7 +76,7 @@ how to get to the Main Street avoiding heavy traffic
 
 Each example should be defined in single line and should be separated of the next one by a newline.
 
-> **Note:** Take into account that in order to train deep learning models, the more example the better your neural network will perform. For the sake of this example we have added 50 examples per intent, but they could be insufficient.
+> **Note:** Take into account that in Deep Learning models, the more examples you train with, the better the neural network will perform. For the sake of this example, we have added 50 examples per intent (but they could be insufficient).
 
 Once you have defined all the examples for every intent, we are going to proceed with the model creation.
 
@@ -148,14 +148,15 @@ Let's break it down into little pieces:
      maxSeqLen: 20,
    })
    ```
-   `maxSeqLen` defines the maximum length of the sentences to train the NN. As webchat is a messaging channel, a `maxSeqLen` of 20 will be enough to cover our needs (_it's pretty uncommon that a user types an input of more of 20 words_).
-3. Before start training our model, we need to split the data into two sets; one for training and one for evaluating the model. `testPercentage` is the percentage of examples that will be used to do the evaluation. This can be done with:
+   `maxSeqLen` defines the maximum length of the sequences generated to train the NN (_it's pretty uncommon that a user types an input of more of 20 words_).
+3. Before start training our model, we need to split the data into two sets; one for training and one for evaluating the model. This can be done with:
    ```ts
    const [xTrain, xTest, yTrain, yTest] = nlu.trainTestSplit({
      data: data,
      testPercentage: 0.1,
    })
    ```
+   `testPercentage` is the percentage of examples that will be used to do the evaluation.
 4. Finally, we will use a predefined template of NN to do the training:
 
    ```ts
@@ -185,12 +186,13 @@ Let's break it down into little pieces:
    Model saved.
    ```
 
-   As you can see, the `acc` (training accuracy) is high, and `val_acc` (validation accuracy) is low. This means that our network did a good job classifying the intents that it already knows, but it's performance when seeing new examples is really poor.
-   We could try to do lots of changes within this code, but we will never obtain significantly better results. To address this problem we will need to create a "dummier" model to be more flexible in terms of learning and correct this issue (known as `overfitting`), so we will need to make use of a custom NLU model.
+   As you can see, the `acc` (training accuracy) is high, and `val_acc` (validation accuracy) is low. This means that our network learned to correctly classify the inputs that it has already seen during the training, but the performance when seeing new examples is really poor. This problem is also known as **Overffiting**.
+
+We could try to do lots of changes within this code, but we will never obtain significantly better results. To address this problem we are going to try the other way of implementing a model. This option offers the possibility of creating a custom model without using any template.
 
 ##### 2.2 Creating your own custom model
 
-In this example, we are going to create a common model's configuration in terms of natural language processing. This is a stack of `sequential` layers consisting of an `embedding` layer, followed by a `LSTM` layer and finally a `dense` layer.
+In this example, we are going to create a common model's configuration in terms of natural language processing. The sequential model is composed of three different layers: an **Embedding** layer, an **LSTM** (Long Short-Term Memory) layer, and finally a **Dense** layer with a `softmax` activation function to compute all intent probabilities.
 
 Let's start by creating a new file called `lstm-model.ts` under **src/nlu/**.
 
@@ -262,22 +264,25 @@ We have defined here the interface `LayersConfig` to be able to tune the model e
     )
     ```
     > **Note:** It's very important you define correctly these parameters for a correct functioning of the model.
-    > **`inputDim`**: size of the vocabulary.
-    > **`outputDim`**: size of the pretrained embedding vectors.
-    > **`inputLength`**: must be the `maxSeqLen`.
-    > **`trainable`**: whether to freeze the weights of WE or leave them to variate. If you want to take all the profit of word embeddings, set it to `false`.
-    > **`weights`**: Loaded word embeddings matrix.
+    >
+    > - **`inputDim`**: size of the vocabulary.
+    > - **`outputDim`**: size of the pretrained embedding vectors.
+    > - **`inputLength`**: must be the `maxSeqLen`.
+    > - **`trainable`**: whether to freeze the weights of WE or leave them to variate. If you want to take all the profit of word embeddings, set it to `false`.
+    >   **`weights`**: Loaded word embeddings matrix.
 3.  Add the rest of layers:
     ```ts
     model.add(layers.lstm(layersConfig.LSTM))
     model.add(layers.dense(layersConfig.DENSE))
     ```
 4.  Configure and prepare the model for training and evaluation.
-    `ts model.compile(modelCompileArgs) model.summary()`
+    ```ts
+    model.compile(modelCompileArgs) model.summary()
+    ```
 
 ##### 2.3 Creating your own custom data preprocessors
 
-In certain situations, you would want to tell `BotonicNLU` how to preprocess the data (removing accents, question marks, ...). To do so, `BotonicNLU` let's you to inject your own `tokenizer`, `normalizer` or `stemmer`. In this example we are going to use a custom `tokenizer` and `normalizer`. In order to maintain the project cleaner, we have created a `preprocessing-tools` directory in **src/nlu/**.
+In certain situations, you would want to tell `BotonicNLU` how to preprocess the data (removing accents, question marks, ...). To do so, `BotonicNLU` let's you to inject your own `tokenizer`, `normalizer` and/or `stemmer`. In this example we are going to use a custom `tokenizer` and `normalizer`. In order to maintain the project cleaner, we have created a `preprocessing-tools` directory in **src/nlu/**.
 
 ###### 2.3.1 Creating a custom tokenizer
 
@@ -289,7 +294,7 @@ const TreebankWordTokenizer = require('natural/lib/natural/tokenizers/treebank_w
 export const tokenizer = new TreebankWordTokenizer()
 ```
 
-In this example, we will be using [`natural`'s](https://github.com/NaturalNode/natural#tokenizers) `TreebankWordTokenizer` which works well for every language. To define your tokenizer, the only requirement is to export a class that implements a `tokenize` method.
+In this example, we will be using [`natural`](https://github.com/NaturalNode/natural#tokenizers)'s `TreebankWordTokenizer` which works well for every language. To define your tokenizer, the only requirement is to export a class that implements a `tokenize` method.
 
 > **Note:** As `natural` is a library centered on Node and we need to have the bot working in a browser environment, we have to require the class explicitly from the absolute path.
 
@@ -397,7 +402,7 @@ Time to configure our model.
 - **LSTM Layer**:
   - As we said before, we want our model to be less rigid when predicting over new inputs. To achive that, we use a technique called `regularization` that can be done by specifying `dropout` parameters to this layer. Also, reducing the number of `units` (neurons per layer) will help.
 - **Dense Layer**:
-  - This is the very last layer and **must** have as many units as intents we are targeting. Since we have multiple intents (classes) we have to make use of `softmax` activation.
+  - This is the very last layer and **must** have as many units as intents we are targeting. We have to make use of `softmax` activation as we want to compute the probabilities of intents so the sum of all of them is equal to 1.
 
 ###### 2.4.4 Training and evaluating the model
 
