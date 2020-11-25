@@ -6,7 +6,7 @@ This repository contains a set of projects available implemented in
 Each template or example is standalone and can be initialized by running:
 
 ```bash
-$ npx botonic new myBot
+$ botonic new myBot
 ```
 
 #### About Examples and Templates
@@ -70,7 +70,7 @@ $ npx botonic new myBot
 1. Fork this project.
 2. Create a new directory within `examples` directory:
    ```bash
-   $ npx botonic new my-example
+   $ botonic new my-example
    ```
 3. Select a template or an example from the prompted list to start with.
 4. Let your imagination run wild.
