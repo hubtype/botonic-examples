@@ -1,5 +1,5 @@
 {
-  "name": "example-booking-platform",
+  "name": "botonic-booking-platform",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --env.target=all --mode=production",
