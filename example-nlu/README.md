@@ -35,7 +35,7 @@ This example shows you how to train a a model using Botonic NLU and take profit 
    ```bash
    $ botonic new <botName> nlu-assistant
    ```
-2. `cd` into `myNluAssistant` directory that has been created.
+2. `cd` into `<botName>` directory that has been created.
 3. Run `botonic serve` to test it in your local machine.
 
 Additionally, you can try to add new examples in **src/nlu/utterances/en** and train the model again by running:
