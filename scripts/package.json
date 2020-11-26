@@ -1,0 +1,21 @@
+{
+  "name": "botonic-scripts",
+  "version": "1.0.0",
+  "scripts": {
+    "update-templates-deps": "ts-node ./ci/update-templates-deps.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "await-spawn": "^4.0.1",
+    "colors": "^1.4.0",
+    "inquirer": "^7.3.3",
+    "typescript": "^4.1.2"
+  }
+}
