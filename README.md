@@ -21,7 +21,7 @@ and select it from the selector.
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/hubtype/botonic-examples/tree/master/example-hotel-reservation">
+      <a href="https://github.com/hubtype/botonic-examples/tree/master/booking-platform">
         Booking Platform
       </a>
     </td>
@@ -35,7 +35,7 @@ and select it from the selector.
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/hubtype/botonic-examples/tree/master/example-nlu">
+      <a href="https://github.com/hubtype/botonic-examples/tree/master/nlu-assistant">
         NLU Assistant
       </a>
     </td>
