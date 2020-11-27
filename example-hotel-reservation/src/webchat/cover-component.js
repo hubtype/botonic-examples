@@ -56,7 +56,7 @@ export default class CustomCover extends React.Component {
         name: this.state.name,
         extra_data: { email: this.state.email, hotels: [] },
       })
-      this.context.sendText('Start', 'PAYLOAD')
+      this.context.sendText('Start')
       this.props.closeComponent()
     } else {
       this.setState({ error: true })
