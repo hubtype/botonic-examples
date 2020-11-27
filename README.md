@@ -55,7 +55,7 @@ and select it from the selector.
     </td>
     <td align="center"></td>
     <td>
-      Example with empty actions. The bot will always respond with the
+      Template with empty actions. The bot will always respond with the
       default `404` action "I don't understand you" when you test it.
     </td>
   </tr>
