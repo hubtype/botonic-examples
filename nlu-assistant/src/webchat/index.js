@@ -10,6 +10,7 @@ export const webchat = {
   storageKey: 'botonic-nlu-example',
 
   onInit: app => {
+    app.clearMessages()
     app.open()
   },
   onOpen: app => app.addUserText('hi'),
