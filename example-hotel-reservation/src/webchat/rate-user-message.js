@@ -22,6 +22,5 @@ export default customMessage({
   component: RateUserMessage,
   defaultProps: {
     from: 'user',
-    ack: 1,
   },
 })

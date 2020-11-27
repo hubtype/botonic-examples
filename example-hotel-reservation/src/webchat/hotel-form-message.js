@@ -27,7 +27,7 @@ const Button = styled.button`
   color: white;
 `
 
-class HoltelForm extends React.Component {
+class HotelForm extends React.Component {
   static contextType = WebchatContext
   constructor(props) {
     super(props)
@@ -169,7 +169,7 @@ class HoltelForm extends React.Component {
 
 export default customMessage({
   name: 'hotel-form',
-  component: HoltelForm,
+  component: HotelForm,
   defaultProps: {
     style: {
       width: '100%',
