@@ -1,18 +1,20 @@
 const path = require('path')
-const ImageminPlugin = require('imagemin-webpack')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack')
+const { web } = require('webpack')
 
 const root = path.resolve(__dirname, 'src')
 const botonicPath = path.resolve(__dirname, 'node_modules', '@botonic', 'react')
 
 const terserPlugin = new TerserPlugin({
+  // TODO: configure sourceMaps not working
   parallel: true,
-  sourceMap: true,
+  // sourceMap: true,
   terserOptions: {
     keep_fnames: true,
   },
@@ -39,7 +41,7 @@ function sourceMap(mode) {
   } else if (mode === MODE_DEV) {
     // 'eval-source-map' would be a good fit for staging (slow but generates original code)
     // from documentation: quick build time, very quick rebuild, transformed code (lines only)
-    return 'cheap-eval-source-map' //callstacks show links to TS code
+    return 'eval-cheap-source-map' //callstacks show links to TS code
   } else {
     throw new Error(
       'Invalid mode argument (' + mode + '). See package.json scripts'
@@ -57,10 +59,12 @@ const resolveConfig = {
       'styled-components'
     ),
   },
+  // fallback: { url: require.resolve('url') },
+  // fallback: { url: false }, // core's url to be replaced
 }
 
 const babelLoaderConfig = {
-  test: /\.(js|jsx)$/,
+  test: /\.?(j|t)s?x/,
   exclude: /node_modules[\/\\](?!(@botonic)[\/\\])/,
   use: {
     loader: 'babel-loader',
@@ -68,17 +72,35 @@ const babelLoaderConfig = {
       cacheDirectory: true,
       presets: ['@babel/preset-env', '@babel/react'],
       plugins: [
-        require('@babel/plugin-proposal-object-rest-spread'),
-        require('@babel/plugin-proposal-class-properties'),
-        require('babel-plugin-add-module-exports'),
-        require('@babel/plugin-transform-runtime'),
+        '@babel/plugin-proposal-object-rest-spread',
+        '@babel/plugin-proposal-class-properties',
+        'babel-plugin-add-module-exports',
+        '@babel/plugin-transform-runtime',
+      ],
+    },
+  },
+}
+const babelLoaderConfig2 = {
+  test: /\.?js/,
+  exclude: /node_modules[\/\\](?!(react-children-utilities)[\/\\])/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      presets: ['@babel/preset-env', '@babel/react'],
+      plugins: [
+        '@babel/plugin-proposal-object-rest-spread',
+        '@babel/plugin-proposal-class-properties',
+        'babel-plugin-add-module-exports',
+        '@babel/plugin-transform-runtime',
+        'babel-plugin-add-import-extension',
       ],
     },
   },
 }
 
 const fileLoaderConfig = {
-  test: /\.(png|svg|jpg|gif)$/,
+  test: /\.(jpe?g|png|gif|svg)$/i,
   use: [
     {
       loader: 'file-loader',
@@ -99,48 +121,56 @@ const stylesLoaderConfig = {
   use: ['style-loader', 'css-loader', 'sass-loader'],
 }
 
-const imageminPlugin = new ImageminPlugin({
-  bail: false,
-  cache: false,
-  imageminOptions: {
+const imageminPlugin = new ImageMinimizerPlugin({
+  minimizerOptions: {
     plugins: [
-      ['imagemin-gifsicle', { interlaced: true }],
-      ['imagemin-jpegtran', { progressive: true }],
-      ['imagemin-optipng', { optimizationLevel: 5 }],
-      ['imagemin-svgo', { removeViewBox: true }],
+      ['gifsicle', { interlaced: true }],
+      ['jpegtran', { progressive: true }],
+      ['optipng', { optimizationLevel: 5 }],
+      [
+        'svgo',
+        {
+          plugins: [
+            {
+              removeViewBox: false,
+            },
+          ],
+        },
+      ],
     ],
   },
 })
 
 function botonicDevConfig(mode) {
   return {
-    optimization: {
-      minimizer: [terserPlugin],
-    },
     mode: mode,
     devtool: sourceMap(mode),
+    devtool: false,
     target: 'web',
     entry: path.resolve('webpack-entries', 'dev-entry.js'),
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
+      rules: [
+        babelLoaderConfig,
+        babelLoaderConfig2,
+        fileLoaderConfig,
+        stylesLoaderConfig,
+      ],
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
       filename: 'webchat.botonic.js',
       library: 'Botonic',
       libraryTarget: 'umd',
       libraryExport: 'app',
-      publicPath: './',
+      globalObject: 'window',
     },
     resolve: resolveConfig,
     devServer: {
-      contentBase: [
+      static: [
         path.join(__dirname, 'dist'),
         path.join(__dirname, 'src', 'nlu', 'models'),
       ],
-      watchContentBase: true,
+      // watchContentBase: true,
       historyApiFallback: true,
-      publicPath: '/',
       hot: true,
     },
     plugins: [
@@ -150,10 +180,18 @@ function botonicDevConfig(mode) {
       }),
       new webpack.HotModuleReplacementPlugin(),
       imageminPlugin,
-      new webpack.EnvironmentPlugin({
-        HUBTYPE_API_URL: null,
-        BOTONIC_TARGET: BOTONIC_TARGETS.DEV,
+      new webpack.DefinePlugin({
+        'process.env.HUBTYPE_API_URL': JSON.stringify(
+          process.env.HUBTYPE_API_URL
+        ),
+        'process.env.WEBCHAT_PUSHER_KEY': JSON.stringify(
+          process.env.WEBCHAT_PUSHER_KEY
+        ),
       }),
+      // new webpack.EnvironmentPlugin({
+      //   HUBTYPE_API_URL: null,
+      //   BOTONIC_TARGET: BOTONIC_TARGETS.DEV,
+      // }),
     ],
   }
 }
@@ -161,6 +199,7 @@ function botonicDevConfig(mode) {
 function botonicWebchatConfig(mode) {
   return {
     optimization: {
+      minimize: true,
       minimizer: [terserPlugin],
     },
     mode: mode,
@@ -168,10 +207,14 @@ function botonicWebchatConfig(mode) {
     target: 'web',
     entry: path.resolve('webpack-entries', 'webchat-entry.js'),
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
+      rules: [
+        babelLoaderConfig,
+        babelLoaderConfig2,
+        fileLoaderConfig,
+        stylesLoaderConfig,
+      ],
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
       filename: 'webchat.botonic.js',
       library: 'Botonic',
       libraryTarget: 'umd',
@@ -197,6 +240,7 @@ function botonicWebchatConfig(mode) {
 function botonicWebviewsConfig(mode) {
   return {
     optimization: {
+      minimize: true,
       minimizer: [terserPlugin],
     },
     mode: mode,
@@ -204,7 +248,7 @@ function botonicWebviewsConfig(mode) {
     target: 'web',
     entry: path.resolve('webpack-entries', 'webviews-entry.js'),
     output: {
-      path: path.resolve(__dirname, 'dist/webviews'),
+      path: path.resolve(path.join(__dirname, 'dist', 'webviews')),
       filename: 'webviews.js',
       library: 'BotonicWebview',
       libraryTarget: 'umd',
@@ -213,6 +257,7 @@ function botonicWebviewsConfig(mode) {
     module: {
       rules: [
         babelLoaderConfig,
+        babelLoaderConfig2,
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
@@ -245,6 +290,7 @@ function botonicWebviewsConfig(mode) {
 function botonicServerConfig(mode) {
   return {
     optimization: {
+      minimize: true,
       minimizer: [terserPlugin],
     },
     context: root,
@@ -257,9 +303,15 @@ function botonicServerConfig(mode) {
       library: 'bot',
       libraryTarget: 'umd',
       libraryExport: 'app',
+      path: path.resolve('./dist'),
     },
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, nullLoaderConfig],
+      rules: [
+        babelLoaderConfig,
+        babelLoaderConfig2,
+        fileLoaderConfig,
+        nullLoaderConfig,
+      ],
     },
     resolve: resolveConfig,
     plugins: [
@@ -269,7 +321,9 @@ function botonicServerConfig(mode) {
         HUBTYPE_API_URL: null,
         BOTONIC_TARGET: 'node',
       }),
-      new CopyPlugin([{ from: 'nlu/models/', to: 'assets/models/' }]),
+      new CopyPlugin({
+        patterns: [{ from: 'nlu/models/', to: 'assets/models/' }],
+      }),
     ],
   }
 }
