@@ -7,11 +7,7 @@ export const webchat = {
   storage: sessionStorage,
   storageKey: 'botonic-telco-example',
 
-  onInit: (app) => {
-    // app.open()
-  },
-
-  onOpen: (app) => {
+  onOpen: app => {
     app.clearMessages()
     app.addUserPayload('hi')
   },
@@ -26,7 +22,7 @@ export const webchat = {
     },
     header: {
       image: BotIconWhite,
-      title: 'Botonic Telco',
+      title: 'Botonic Telco Offers',
       style: {
         background: COLORS.PRIMARY_COLOR,
       },

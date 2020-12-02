@@ -23,11 +23,12 @@ const shake = keyframes`
   }
 `
 const Container = styled.div`
-  animation: ${(props) => !props.hover && shake} 0.82s
+  animation: ${props => !props.hover && shake} 0.82s
     cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
   bottom: 50px;
   right: 50px;
   position: fixed;
+  cursor: pointer;
 `
 
 export const CustomTrigger = () => {

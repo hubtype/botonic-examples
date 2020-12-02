@@ -11,13 +11,13 @@ export default {
   choose: ['Choose Plan'],
 
   start_text: [
-    'Welcome, I am your virtual assistant of Botonic Telco, select which service you want to hire?',
+    'Welcome, I am your virtual assistant of Botonic Telco, select which service you want to contract.',
   ],
   start_again: ['Start Again'],
-  ask_more: ['Do you want to hire any more rate?'],
+  ask_more: ['Do you want to contract any more rate?'],
 
-  contract_internet: ['Select one of our Internet rates'],
-  contract_phone: ['Select one of our cell phone rates'],
+  contract_internet: ['Select one of our Internet rates:'],
+  contract_phone: ['Select one of our cell phone rates:'],
 
   after_buy_internet: ['You have selected the Internet rate of'],
   after_buy_phone: ['You have selected the cell phone rate of'],
@@ -32,8 +32,8 @@ export default {
     no: ['Refuse'],
   },
 
-  summary: ['Here you can see the list of the products you have selected'],
-  continue: ['To continue with the purchase click confirm'],
+  summary: ['Here you can see the list of the products you have selected:'],
+  continue: ['To continue with the purchase click confirm.'],
 
   confirm: {
     text: ['Please enter your user number'],
@@ -42,7 +42,7 @@ export default {
   },
 
   bye: {
-    confirm: ['Thank you for your purchase, I hope you have a nice day'],
-    cancel: ['The purchase has been canceled'],
+    confirm: ['Thank you for your purchase, I hope you have a nice day.'],
+    cancel: ['The purchase has been canceled.'],
   },
 }
