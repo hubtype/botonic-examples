@@ -49,6 +49,19 @@ and select it from the selector.
   </tr>
   <tr>
     <td align="center">
+      <a href="https://github.com/hubtype/botonic-examples/tree/master/telco-offers">
+        Telco Offers
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://botonic.io/examples/telco-offers/">🔗</a>
+    </td>
+    <td>
+      This example shows you a multi-language conversation flow to acquire an Internet or a cell phone rate using buttons and replies.
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
       <a href="https://github.com/hubtype/botonic-examples/tree/master/blank">
         Blank
       </a>

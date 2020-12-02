@@ -1,7 +1,6 @@
 # Botonic Telco
 
-This example shows you a multi-language conversation flow to (contractar linia telefonica) using buttons and replies.
-
+This example shows you a multi-language conversation flow to acquire an Internet or a cell phone rate using buttons and replies.
 
 **What's in this document?**
 
@@ -10,23 +9,23 @@ This example shows you a multi-language conversation flow to (contractar linia t
 - [Locales](#locales)
 - [Webchat Settings](#webchat-settings)
 
-
 ## How to use this example
 
 1. From your command line, download the example by running:
    ```bash
-   $ botonic new <botName> botonic-telco
+   $ botonic new <botName> telco-offers
    ```
 2. `cd` into `<botName>` directory that has been created.
 3. Run `botonic serve` to test it in your local machine.
-
 
 ## Routes and Actions
 
 [Routes](https://botonic.io/docs/concepts/routes) map user inputs to [actions](https://botonic.io/docs/concepts/actions) which consist of simple units of logic that your bot can perform and the response that your bot generates.
 
 Here we can see a few examples of how we have captured the user input.
-**src/routesjs**
+
+**src/routes.js**
+
 ```javascript
 import Start from './actions/start'
 import ChooseLanguage from './actions/choose_language'
@@ -56,6 +55,7 @@ export const routes = [
 If a rule matches it will trigger an action:
 
 **src/actions/choose-language.jsx**
+
 ```javascript
 import React from 'react'
 import { Text, Reply } from '@botonic/react'
@@ -74,7 +74,6 @@ export default class extends React.Component {
     )
   }
 }
-
 ```
 
 ## Locales
@@ -83,6 +82,7 @@ The [Locales](https://botonic.io/docs/concepts/i18n/) allows us to build a bot t
 In the `src/locales` folder we have added a js file for each language we want to support.
 
 **src/locales/en.js**
+
 ```javascript
 export default {
   internet: ['Internet'],
@@ -99,8 +99,8 @@ export default {
 }
 ```
 
-
 **src/locales/es.js**
+
 ```javascript
 export default {
   internet: ['Fibra'],
@@ -131,6 +131,7 @@ export const locales = { en, es }
 In the initial action we have set the locale and then we can access an object from locales with `this.context.getString` method.
 
 **src/actions/start.jsx**
+
 ```javascript
 import React from 'react'
 import { RequestContext, Text, Button } from '@botonic/react'
@@ -157,7 +158,6 @@ export default class extends React.Component {
 }
 ```
 
-
 ## Webchat Settings
 
 The [Webchat Settings](https://botonic.io/docs/components/webchatsettings/) component can be appended at the end of a message to change Webchat properties dynamically.
@@ -165,6 +165,7 @@ The [Webchat Settings](https://botonic.io/docs/components/webchatsettings/) comp
 We have used it to enable the user input in one of the last actions.
 
 **src/actions/confirm.jsx**
+
 ```javascript
 import React from 'react'
 import { RequestContext, Text, WebchatSettings } from '@botonic/react'
@@ -195,6 +196,4 @@ export default class extends React.Component {
 }
 ```
 
-
-
- ...and we are done 🎉
+...and we are done 🎉
