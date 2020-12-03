@@ -13,14 +13,15 @@ export default class extends React.Component {
         `|  ${minutes}  |  ${data}  |  ${price}  |\n`
       )
     }
+    const payloadUnlimited = `buyPhone-${_('unlimited')}-${_(
+      'unlimited'
+    )}-23.50`
     return (
       <>
         <Text> {_('contract_phone')}</Text>
         <Text>
-          {renderTable('unlimited', 'unlimited', '23.50$')}
-          <Button payload='buyPhone-unlimited-unlimited-23.50'>
-            {_('choose')}
-          </Button>
+          {renderTable(`${_('unlimited')}`, `${_('unlimited')}`, '23.50$')}
+          <Button payload={payloadUnlimited}>{_('choose')}</Button>
         </Text>
         <Text>
           {renderTable('200', '20GB', '15.50$')}

@@ -23,11 +23,10 @@ export default class extends React.Component {
     return (
       <>
         <Text>
-          {_('after_buy_internet')}: {'\n'}
+          {_('after_buy_internet')} {'\n'}
           **{_('data')}**: {this.props.data}
           {'\n'}
-          **{_('price')}**: {this.props.price}$
-          {'\n'}
+          **{_('price')}**: {this.props.price}${'\n'}
         </Text>
         <Text>
           {_('offer.text')}

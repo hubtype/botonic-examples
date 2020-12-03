@@ -5,7 +5,6 @@ export default class extends React.Component {
   static contextType = RequestContext
   static async botonicInit(request) {
     const language = request.input.payload.split('-')[1]
-    console.log('session', request.session)
     const extra_data = { phone: [] }
     request.session.user.extra_data = extra_data
     return { language }

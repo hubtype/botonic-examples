@@ -9,6 +9,7 @@ export default {
   price: ['Price'],
   minutes: ['Minutes'],
   choose: ['Choose Plan'],
+  unlimited: ['unlimited'],
 
   start_text: [
     'Welcome, I am your virtual assistant of Botonic Telco, select which service you want to contract.',
@@ -19,13 +20,13 @@ export default {
   contract_internet: ['Select one of our Internet rates:'],
   contract_phone: ['Select one of our cell phone rates:'],
 
-  after_buy_internet: ['You have selected the Internet rate of'],
-  after_buy_phone: ['You have selected the cell phone rate of'],
-  after_buy_offer: ['The offer has been added'],
+  after_buy_internet: ['You have selected the Internet rate of:'],
+  after_buy_phone: ['You have selected the cell phone rate of:'],
+  after_buy_offer: ['The offer has been added:'],
 
   offer: {
     text: [
-      '**OFFER**: Get a package of series, movies and sports for only 6.50$/month for the next three months',
+      '**OFFER**: Get a package of series, movies and sports for only 6.50$/month for the next three months.',
     ],
     tv: ['Sports + Series + Movies'],
     yes: ['Add'],
@@ -42,7 +43,10 @@ export default {
   },
 
   bye: {
-    confirm: ['Thank you for your purchase, I hope you have a nice day.'],
+    confirm1: ['User'],
+    confirm2: [
+      'confirmed! Thank you for your purchase, I hope you have a nice day.',
+    ],
     cancel: ['The purchase has been canceled.'],
   },
 }

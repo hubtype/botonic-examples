@@ -23,7 +23,7 @@ export default class extends React.Component {
     return (
       <>
         <Text>
-          {_('after_buy_phone')}: {'\n'}
+          {_('after_buy_phone')} {'\n'}
           **{_('minutes')}**: {this.props.minutes}
           {'\n'}
           **{_('data')}**: {this.props.data}

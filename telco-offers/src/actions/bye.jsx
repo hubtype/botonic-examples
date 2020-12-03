@@ -5,7 +5,8 @@ export default class extends React.Component {
   static contextType = RequestContext
   static async botonicInit(request) {
     const hasCancel = request.input.payload || false
-    return { hasCancel }
+    const user = request.input.data
+    return { hasCancel, user }
   }
 
   render() {
@@ -18,7 +19,8 @@ export default class extends React.Component {
           </Text>
         ) : (
           <Text>
-            {_('bye.confirm')} <Button payload='hi'>{_('start_again')}</Button>
+            {_('bye.confirm1')} {this.props.user} {_('bye.confirm2')}
+            <Button payload='hi'>{_('start_again')}</Button>
           </Text>
         )}
         <WebchatSettings enableUserInput={false} />

@@ -10,7 +10,7 @@ export default class extends React.Component {
     const priceTV = (tv && parseFloat(tv.price)) || 0.0
     const priceInternet = (internet && parseFloat(internet.price)) || 0.0
     let pricePhone = 0.0
-    phone.forEach((m) => {
+    phone.forEach(m => {
       pricePhone = pricePhone + parseFloat(m.price)
     })
     const price = priceTV + priceInternet + pricePhone
@@ -51,13 +51,13 @@ export default class extends React.Component {
     return (
       <>
         <Text>
-          {_('summary')}: {'\n'}
+          {_('summary')} {'\n'}
           {getInternet()}
           {getPhone()}
           {getTV()}
           **Total: {this.props.price}$**
         </Text>
-        <Text>
+        <Text delay={2}>
           {_('continue')}
           <Button payload='confirm'>{_('confirm.yes')}</Button>
           <Button payload='bye-canceled'>{_('confirm.no')}</Button>

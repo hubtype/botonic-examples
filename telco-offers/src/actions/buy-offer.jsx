@@ -23,14 +23,17 @@ export default class extends React.Component {
       <>
         {this.props.tv && (
           <Text>
-            {_('after_buy_offer')}: {'\n'}
-            **TV**: {this.props.tv.name}{'\n'}
+            {_('after_buy_offer')} {'\n'}
+            **TV**: {this.props.tv.name}
+            {'\n'}
             **{_('price')}**: {this.props.tv.price}$
           </Text>
         )}
         <Text>
           {_('ask_more')}
-          <Button payload='phone'>{this.props.hasPhone ? _('extra_phone') :  _('phone')}</Button>
+          <Button payload='phone'>
+            {this.props.hasPhone ? _('extra_phone') : _('phone')}
+          </Button>
           <Button payload='summary'>{_('done')}</Button>
         </Text>
       </>
