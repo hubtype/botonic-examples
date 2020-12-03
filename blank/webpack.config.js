@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack')
-const { web } = require('webpack')
 
 const root = path.resolve(__dirname, 'src')
 const botonicPath = path.resolve(__dirname, 'node_modules', '@botonic', 'react')
@@ -51,14 +50,6 @@ function sourceMap(mode) {
 
 const resolveConfig = {
   extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-  alias: {
-    react: path.resolve(__dirname, 'node_modules', 'react'),
-    'styled-components': path.resolve(
-      __dirname,
-      'node_modules',
-      'styled-components'
-    ),
-  },
   // fallback: { url: require.resolve('url') },
   // fallback: { url: false }, // core's url to be replaced
 }
@@ -88,13 +79,7 @@ const babelLoaderConfig2 = {
     options: {
       cacheDirectory: true,
       presets: ['@babel/preset-env', '@babel/react'],
-      plugins: [
-        '@babel/plugin-proposal-object-rest-spread',
-        '@babel/plugin-proposal-class-properties',
-        'babel-plugin-add-module-exports',
-        '@babel/plugin-transform-runtime',
-        'babel-plugin-add-import-extension',
-      ],
+      plugins: ['babel-plugin-add-import-extension'],
     },
   },
 }
@@ -145,7 +130,6 @@ function botonicDevConfig(mode) {
   return {
     mode: mode,
     devtool: sourceMap(mode),
-    devtool: false,
     target: 'web',
     entry: path.resolve('webpack-entries', 'dev-entry.js'),
     module: {
@@ -161,7 +145,6 @@ function botonicDevConfig(mode) {
       library: 'Botonic',
       libraryTarget: 'umd',
       libraryExport: 'app',
-      globalObject: 'window',
     },
     resolve: resolveConfig,
     devServer: {
@@ -169,7 +152,7 @@ function botonicDevConfig(mode) {
         path.join(__dirname, 'dist'),
         path.join(__dirname, 'src', 'nlu', 'models'),
       ],
-      // watchContentBase: true,
+      liveReload: true,
       historyApiFallback: true,
       hot: true,
     },
@@ -180,18 +163,10 @@ function botonicDevConfig(mode) {
       }),
       new webpack.HotModuleReplacementPlugin(),
       imageminPlugin,
-      new webpack.DefinePlugin({
-        'process.env.HUBTYPE_API_URL': JSON.stringify(
-          process.env.HUBTYPE_API_URL
-        ),
-        'process.env.WEBCHAT_PUSHER_KEY': JSON.stringify(
-          process.env.WEBCHAT_PUSHER_KEY
-        ),
+      new webpack.EnvironmentPlugin({
+        HUBTYPE_API_URL: null,
+        BOTONIC_TARGET: BOTONIC_TARGETS.DEV,
       }),
-      // new webpack.EnvironmentPlugin({
-      //   HUBTYPE_API_URL: null,
-      //   BOTONIC_TARGET: BOTONIC_TARGETS.DEV,
-      // }),
     ],
   }
 }
