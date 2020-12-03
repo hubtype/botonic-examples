@@ -8,7 +8,6 @@ import MoreHelp from './actions/more-help'
 
 export const routes = [
   { path: 'start', text: /^start$/i, action: Start },
-  { path: 'carousel', payload: 'carousel', text: /^hotel$/i, action: Carousel },
   {
     path: 'book-hotel',
     payload: /hotel-.*/,
@@ -25,6 +24,12 @@ export const routes = [
     action: CloseWebview,
   },
   {
+    path: 'carousel',
+    payload: 'carousel',
+    text: /^.*\b(hotel|book)\b.*$/i,
+    action: Carousel,
+  },
+  {
     path: 'Bye',
     payload: /rating-.*/,
     text: /^bye$/i,
@@ -32,6 +37,7 @@ export const routes = [
   },
   {
     path: 'help',
+    text: /.*/,
     payload: /help-.*/,
     action: MoreHelp,
   },

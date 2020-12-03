@@ -76,15 +76,15 @@ class HotelForm extends React.Component {
     return true
   }
 
-  handlePhone = (event) => {
+  handlePhone = event => {
     this.setState({ phone: event.target.value })
   }
 
-  handleDate = (date) => {
+  handleDate = date => {
     this.setState({ date: date })
   }
 
-  handleGuests = (value) => {
+  handleGuests = value => {
     this.setState({ guests: value ? value.guests : '' })
   }
 
@@ -98,6 +98,11 @@ class HotelForm extends React.Component {
     ]
     return (
       <Form>
+        <p style={{ fontSize: 10 }}>
+          <em>
+            We will not store the fulfilled information. You can fake the data.
+          </em>
+        </p>
         <MyTextField
           required={true}
           label='Phone'
@@ -109,7 +114,7 @@ class HotelForm extends React.Component {
         <Autocomplete
           disabled={!this.state.edit}
           options={guestsOptions}
-          getOptionLabel={(option) => option.guests}
+          getOptionLabel={option => option.guests}
           getOptionSelected={(option, value) => option.guests == value.guests}
           onChange={(event, newValue) => {
             this.handleGuests(newValue)
@@ -118,7 +123,7 @@ class HotelForm extends React.Component {
             width: '100%',
             padding: '0px 0px 5px 63px',
           }}
-          renderInput={(params) => (
+          renderInput={params => (
             <MyTextField
               required={true}
               label='Guests'
