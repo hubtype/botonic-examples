@@ -59,18 +59,28 @@ const resolveConfig = {
   },
 }
 
-const babelLoaderConfig = {
-  test: /\.(js|jsx)$/,
-  exclude: /node_modules[\/\\](?!(@botonic)[\/\\])/,
+const typescriptLoaderConfig = {
+  test: /\.(js|jsx|ts|tsx)$/,
+  exclude: /node_modules[/\\](?!(@botonic\/(core|react))[/\\])/,
   use: {
     loader: 'babel-loader',
     options: {
+      sourceType: 'unambiguous', //https://github.com/babel/babel/issues/8900
       cacheDirectory: true,
-      presets: ['@babel/preset-env', '@babel/react'],
+      presets: [
+        '@babel/react',
+        // babel/env before typescript to avoid losing constructor auto-assign https://github.com/babel/babel/issues/8752#issuecomment-486541662
+        [
+          '@babel/env',
+          {
+            modules: false, // Needed for tree shaking to work.
+          },
+        ],
+        '@babel/typescript',
+      ],
       plugins: [
         require('@babel/plugin-proposal-object-rest-spread'),
         require('@babel/plugin-proposal-class-properties'),
-        require('babel-plugin-add-module-exports'),
         require('@babel/plugin-transform-runtime'),
       ],
     },
@@ -122,7 +132,7 @@ function botonicDevConfig(mode) {
     target: 'web',
     entry: path.resolve('webpack-entries', 'dev-entry.js'),
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
+      rules: [typescriptLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -168,7 +178,7 @@ function botonicWebchatConfig(mode) {
     target: 'web',
     entry: path.resolve('webpack-entries', 'webchat-entry.js'),
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
+      rules: [typescriptLoaderConfig, fileLoaderConfig, stylesLoaderConfig],
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -212,7 +222,7 @@ function botonicWebviewsConfig(mode) {
     },
     module: {
       rules: [
-        babelLoaderConfig,
+        typescriptLoaderConfig,
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
@@ -259,7 +269,7 @@ function botonicServerConfig(mode) {
       libraryExport: 'app',
     },
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig, nullLoaderConfig],
+      rules: [typescriptLoaderConfig, fileLoaderConfig, nullLoaderConfig],
     },
     resolve: resolveConfig,
     plugins: [
