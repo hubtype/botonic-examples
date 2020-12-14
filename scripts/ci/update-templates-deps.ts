@@ -10,8 +10,6 @@ import {
 } from './utils'
 
 process.chdir('..')
-console.log(process.cwd())
-console.log(process.argv)
 
 let versionNumber = process.argv[2]
 
