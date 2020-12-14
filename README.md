@@ -74,6 +74,17 @@ and select it from the selector.
   </tr>
   <tr>
     <td align="center">
+      <a href="https://github.com/hubtype/botonic-examples/tree/master/blank-typescript">
+        Blank Typescript
+      </a>
+    </td>
+    <td align="center"></td>
+    <td>
+      Template with empty actions prepared to be used with Typescript.
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
       <a href="https://github.com/hubtype/botonic-examples/tree/master/tutorial">
         Tutorial
       </a>
