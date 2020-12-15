@@ -68,6 +68,14 @@ const optimizationConfig = {
 
 const resolveConfig = {
   extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.mjs'],
+  alias: {
+    react: path.resolve(__dirname, 'node_modules', 'react'),
+    'styled-components': path.resolve(
+      __dirname,
+      'node_modules',
+      'styled-components'
+    ),
+  },
 }
 
 const babelLoaderConfig = {
