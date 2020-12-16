@@ -125,7 +125,19 @@ const nullLoaderConfig = {
 
 const stylesLoaderConfig = {
   test: /\.(scss|css)$/,
-  use: ['style-loader', 'css-loader', 'sass-loader'],
+  use: [
+    {
+      loader: 'style-loader',
+      options: {
+        insert: function (element) {
+          if (!window._botonicInsertStyles) window._botonicInsertStyles = []
+          window._botonicInsertStyles.push(element)
+        },
+      },
+    },
+    'css-loader',
+    'sass-loader',
+  ],
 }
 
 const imageminPlugin = new ImageMinimizerPlugin({
