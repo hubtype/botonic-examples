@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@botonic/plugin-nlu": "0.17.0-beta.0",
-    "@botonic/react": "0.17.0-beta.0",
+    "@botonic/plugin-nlu": "0.17.0-beta.1",
+    "@botonic/react": "0.17.0-beta.1",
     "axios": "^0.21.0",
     "leaflet": "^1.7.1",
     "natural": "^2.1.5",

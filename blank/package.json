@@ -12,6 +12,10 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!@botonic).+\\.(js|jsx|ts|tsx|mjs)$"
     ],
+    "globals": {
+      "HUBTYPE_API_URL": "",
+      "WEBCHAT_PUSHER_KEY": ""
+    },
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(scss|css|less)$": "<rootDir>/__mocks__/styleMock.js"
@@ -19,7 +23,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@botonic/react": "0.17.0-beta.0"
+    "@botonic/react": "0.17.0-beta.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
