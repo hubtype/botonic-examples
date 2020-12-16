@@ -28,8 +28,8 @@ const BOTONIC_TARGETS = {
   WEBCHAT: 'webchat',
 }
 
+const WEBPACK_ENTRIES_DIR = 'webpack-entries'
 const WEBPACK_ENTRIES = {
-  DIR: 'webpack-entries',
   DEV: 'dev-entry.js',
   NODE: 'node-entry.js',
   WEBCHAT: 'webchat-entry.js',
@@ -153,7 +153,7 @@ function botonicDevConfig(mode) {
   return {
     mode: mode,
     devtool: sourceMap(mode),
-    entry: path.resolve(WEBPACK_ENTRIES.DIR, WEBPACK_ENTRIES.DEV),
+    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.DEV),
     target: 'web',
     module: {
       rules: [
@@ -200,7 +200,7 @@ function botonicWebchatConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'web',
-    entry: path.resolve(WEBPACK_ENTRIES.DIR, WEBPACK_ENTRIES.WEBCHAT),
+    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.WEBCHAT),
     module: {
       rules: [
         babelTypescriptLoaderConfig,
@@ -237,7 +237,7 @@ function botonicWebviewsConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'web',
-    entry: path.resolve(WEBPACK_ENTRIES.DIR, WEBPACK_ENTRIES.WEBVIEWS),
+    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.WEBVIEWS),
     output: {
       filename: 'webviews.js',
       library: 'BotonicWebview',
@@ -274,7 +274,7 @@ function botonicNodeConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'node',
-    entry: path.resolve(WEBPACK_ENTRIES.DIR, WEBPACK_ENTRIES.NODE),
+    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.NODE),
     resolve: resolveConfig,
     output: {
       filename: 'bot.js',
