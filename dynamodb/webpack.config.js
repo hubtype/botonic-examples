@@ -7,7 +7,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const ROOT = path.resolve(__dirname, 'src')
+const ASSETS_DIRNAME = 'assets'
+const MODELS_DIRNAME = 'models'
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
+const WEBVIEWS_PATH = path.resolve(OUTPUT_PATH, 'webviews')
+const MODELS_PATH = path.join('nlu', MODELS_DIRNAME)
+const ASSETS_MODELS_PATH = path.join(ASSETS_DIRNAME, MODELS_DIRNAME)
+
 const BOTONIC_PATH = path.resolve(
   __dirname,
   'node_modules',
@@ -28,7 +34,7 @@ const BOTONIC_TARGETS = {
   WEBCHAT: 'webchat',
 }
 
-const WEBPACK_ENTRIES_DIR = 'webpack-entries'
+const WEBPACK_ENTRIES_DIRNAME = 'webpack-entries'
 const WEBPACK_ENTRIES = {
   DEV: 'dev-entry.js',
   NODE: 'node-entry.js',
@@ -146,12 +152,12 @@ function botonicDevConfig(mode) {
   return {
     mode: mode,
     devtool: sourceMap(mode),
-    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.DEV),
+    entry: path.resolve(WEBPACK_ENTRIES_DIRNAME, WEBPACK_ENTRIES.DEV),
     target: 'web',
     module: {
       rules: [
         babelLoaderConfig,
-        fileLoaderConfig('assets'),
+        fileLoaderConfig(ASSETS_DIRNAME),
         stylesLoaderConfig,
       ],
     },
@@ -164,10 +170,7 @@ function botonicDevConfig(mode) {
     },
     resolve: resolveConfig,
     devServer: {
-      static: [
-        path.join(__dirname, 'dist'),
-        path.join(__dirname, 'src', 'nlu', 'models'),
-      ],
+      static: [OUTPUT_PATH, path.join(__dirname, 'src', MODELS_PATH)],
       liveReload: true,
       historyApiFallback: true,
       hot: true,
@@ -181,6 +184,7 @@ function botonicDevConfig(mode) {
       imageminPlugin,
       new webpack.DefinePlugin({
         IS_BROWSER: true,
+        IS_NODE: false,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
       }),
     ],
@@ -193,11 +197,11 @@ function botonicWebchatConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'web',
-    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.WEBCHAT),
+    entry: path.resolve(WEBPACK_ENTRIES_DIRNAME, WEBPACK_ENTRIES.WEBCHAT),
     module: {
       rules: [
         babelLoaderConfig,
-        fileLoaderConfig('assets'),
+        fileLoaderConfig(ASSETS_DIRNAME),
         stylesLoaderConfig,
       ],
     },
@@ -217,6 +221,7 @@ function botonicWebchatConfig(mode) {
       imageminPlugin,
       new webpack.DefinePlugin({
         IS_BROWSER: true,
+        IS_NODE: false,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
         WEBCHAT_PUSHER_KEY: JSON.stringify(process.env.WEBCHAT_PUSHER_KEY),
       }),
@@ -230,18 +235,18 @@ function botonicWebviewsConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'web',
-    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.WEBVIEWS),
+    entry: path.resolve(WEBPACK_ENTRIES_DIRNAME, WEBPACK_ENTRIES.WEBVIEWS),
     output: {
       filename: 'webviews.js',
       library: 'BotonicWebview',
       libraryTarget: UMD_LIBRARY_TARGET,
       libraryExport: 'app',
-      path: path.resolve(OUTPUT_PATH, 'webviews'),
+      path: WEBVIEWS_PATH,
     },
     module: {
       rules: [
         babelLoaderConfig,
-        fileLoaderConfig('../assets'),
+        fileLoaderConfig(path.join('..', ASSETS_DIRNAME)),
         stylesLoaderConfig,
       ],
     },
@@ -254,6 +259,7 @@ function botonicWebviewsConfig(mode) {
       imageminPlugin,
       new webpack.DefinePlugin({
         IS_BROWSER: true,
+        IS_NODE: false,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
       }),
     ],
@@ -267,7 +273,7 @@ function botonicNodeConfig(mode) {
     mode: mode,
     devtool: sourceMap(mode),
     target: 'node',
-    entry: path.resolve(WEBPACK_ENTRIES_DIR, WEBPACK_ENTRIES.NODE),
+    entry: path.resolve(WEBPACK_ENTRIES_DIRNAME, WEBPACK_ENTRIES.NODE),
     resolve: resolveConfig,
     output: {
       filename: 'bot.js',
@@ -277,17 +283,22 @@ function botonicNodeConfig(mode) {
       path: OUTPUT_PATH,
     },
     module: {
-      rules: [babelLoaderConfig, fileLoaderConfig('assets'), nullLoaderConfig],
+      rules: [
+        babelLoaderConfig,
+        fileLoaderConfig(ASSETS_DIRNAME),
+        nullLoaderConfig,
+      ],
     },
     plugins: [
       new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['dist'] }),
       imageminPlugin,
       new webpack.DefinePlugin({
+        IS_BROWSER: false,
         IS_NODE: true,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
       }),
       new CopyPlugin({
-        patterns: [{ from: 'nlu/models/', to: 'assets/models/' }],
+        patterns: [{ from: MODELS_PATH, to: ASSETS_MODELS_PATH }],
       }),
     ],
   }
