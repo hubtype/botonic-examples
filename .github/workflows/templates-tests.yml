@@ -1,10 +1,10 @@
-name: Botonic Examples - Templates Tests
+name: Botonic Examples - Tests
 
 on: [push]
 
 jobs:
-  botonic-cli-templates-tutorial-tests:
-    name: Templates tests
+  botonic-examples-tests:
+    name: Examples tests
     runs-on: ubuntu-latest
     steps:
       - name: Checking out to current branch
@@ -20,52 +20,52 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: tutorial blank build & test
+      - name: blank build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: blank
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial childs build & test
+      - name: blank-typescript build & test
+        env:
+          BOTONIC_DISABLE_MIXPANEL: 1
+          TEST_PATH: blank-typescript
+        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
+      - name: childs build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: childs
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial custom-webchat build & test
+      - name: custom-webchat build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: custom-webchat
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial dynamic-carousel build & test
+      - name: dynamic-carousel build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: dynamic-carousel
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial dynamic-carousel build & test
-        env:
-          BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: dynamic-carousel
-        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial dynamodb build & test
+      - name: dynamodb build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: dynamodb
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial handoff build & test
+      - name: handoff build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: handoff
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial intent build & test
+      - name: intent build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: intent
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial nlu build & test
+      - name: nlu build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: nlu
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: tutorial template build & test
+      - name: tutorial build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: tutorial

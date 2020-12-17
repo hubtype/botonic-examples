@@ -92,12 +92,20 @@ const babelLoaderConfig = {
   use: {
     loader: 'babel-loader',
     options: {
+      sourceType: 'unambiguous',
       cacheDirectory: true,
-      presets: ['@babel/preset-env', '@babel/react'],
+      presets: [
+        '@babel/react',
+        [
+          '@babel/preset-env',
+          {
+            modules: false,
+          },
+        ],
+      ],
       plugins: [
         '@babel/plugin-proposal-object-rest-spread',
         '@babel/plugin-proposal-class-properties',
-        'babel-plugin-add-module-exports',
         '@babel/plugin-transform-runtime',
       ],
     },
@@ -125,7 +133,19 @@ const nullLoaderConfig = {
 
 const stylesLoaderConfig = {
   test: /\.(scss|css)$/,
-  use: ['style-loader', 'css-loader', 'sass-loader'],
+  use: [
+    {
+      loader: 'style-loader',
+      options: {
+        insert: function (element) {
+          if (!window._botonicInsertStyles) window._botonicInsertStyles = []
+          window._botonicInsertStyles.push(element)
+        },
+      },
+    },
+    'css-loader',
+    'sass-loader',
+  ],
 }
 
 const imageminPlugin = new ImageMinimizerPlugin({

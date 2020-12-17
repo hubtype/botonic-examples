@@ -9,23 +9,22 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          node: 'current'
-        }
-      }
+          node: 'current',
+        },
+      },
     ],
     [
       '@babel/react',
       {
         targets: {
-          node: 'current'
-        }
-      }
-    ]
+          node: 'current',
+        },
+      },
+    ],
   ],
   plugins: [
-    require('@babel/plugin-proposal-object-rest-spread'),
-    require('@babel/plugin-proposal-class-properties'),
-    require('babel-plugin-add-module-exports'),
-    require('@babel/plugin-transform-runtime')
-  ]
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-transform-runtime',
+  ],
 }
