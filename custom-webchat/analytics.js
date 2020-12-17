@@ -29,7 +29,7 @@ function initializeCredentials() {
   if (!fs.existsSync(BOTONIC_HOME_PATH)) fs.mkdirSync(BOTONIC_HOME_PATH)
   const anonymous_id = Math.round(Math.random() * 100000000)
   fs.writeFileSync(
-    botonic_credentials_path,
+    BOTONIC_CREDENTIALS_PATH,
     JSON.stringify({ analytics: { anonymous_id } })
   )
 }

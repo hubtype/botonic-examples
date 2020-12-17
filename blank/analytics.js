@@ -8,9 +8,10 @@ const BOTONIC_CREDENTIALS_PATH = path.join(
   BOTONIC_HOME_PATH,
   'credentials.json'
 )
+const ANALYTICS_KEY = 'YD0jpJHNGW12uhLNbgB4wbdTRQ4Cy1Zu'
 
 let credentials
-const analytics = new Analytics('YD0jpJHNGW12uhLNbgB4wbdTRQ4Cy1Zu')
+const analytics = new Analytics(ANALYTICS_KEY)
 
 function analyticsEnabled() {
   return process.env.BOTONIC_DISABLE_ANALYTICS !== '1'
@@ -29,7 +30,7 @@ function initializeCredentials() {
   if (!fs.existsSync(BOTONIC_HOME_PATH)) fs.mkdirSync(BOTONIC_HOME_PATH)
   const anonymous_id = Math.round(Math.random() * 100000000)
   fs.writeFileSync(
-    botonic_credentials_path,
+    BOTONIC_CREDENTIALS_PATH,
     JSON.stringify({ analytics: { anonymous_id } })
   )
 }
