@@ -67,5 +67,5 @@ try {
   if (MODE === 'serve') track('Served Botonic CLI')
   if (MODE === 'train') track('Trained with Botonic train')
 } catch (e) {
-  console.warn('Credentials could not be loaded', e)
+  console.warn('Error tracking event', e)
 }
