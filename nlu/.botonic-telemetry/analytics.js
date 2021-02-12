@@ -91,8 +91,8 @@ function track(event, properties = {}) {
     credentials.analytics
   ) {
     properties = {
-      ...properties,
       ...getSystemInformation(),
+      ...properties,
     }
     analytics.track({
       event: event,
