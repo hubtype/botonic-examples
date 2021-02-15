@@ -41,7 +41,7 @@ const botonicCredentialsPath = path.join(botonicHomePath, 'credentials.json')
 const ANALYTICS_KEY = 'YD0jpJHNGW12uhLNbgB4wbdTRQ4Cy1Zu'
 
 let credentials
-const analytics = new Analytics(ANALYTICS_KEY)
+const analytics = new Analytics(ANALYTICS_KEY, { flushAt: 1 })
 
 function isAnalyticsEnabled() {
   return process.env.BOTONIC_DISABLE_ANALYTICS !== '1'
