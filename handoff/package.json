@@ -6,7 +6,7 @@
     "prestart": "node ./.botonic-telemetry/analytics.js serve",
     "start": "webpack serve --env target=dev --mode=development",
     "test": "jest",
-    "pretrain": "node ./analytics.js train",
+    "pretrain": "node ./.botonic-telemetry/analytics.js train",
     "train": "node_modules/.bin/ts-node src/nlu/train-model.ts"
   },
   "jest": {
