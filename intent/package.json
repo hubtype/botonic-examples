@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --env target=all --mode=production",
-    "prestart": "node ./.botonic-telemetry/analytics.js serve",
     "start": "webpack serve --env target=dev --mode=development",
     "test": "jest",
-    "pretrain": "node ./.botonic-telemetry/analytics.js train",
     "train": "node_modules/.bin/ts-node src/nlu/train-model.ts"
   },
   "jest": {
