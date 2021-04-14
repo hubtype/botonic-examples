@@ -5,8 +5,7 @@ import { emailRegex, MyTextField } from '../utils'
 
 const Container = styled.div`
   position: absolute;
-  height: 432px;
-  width: calc(100%-60px);
+  height: calc(100% - 48px);
   left: 0;
   top: 48px;
   background: white;
@@ -22,7 +21,7 @@ const Button = styled.button`
   height: 40px;
   background: #2f2f2f;
   border-radius: 8px;
-  margin-top: 20px;
+  margin: 20px;
   text-align: center;
   color: white;
 `

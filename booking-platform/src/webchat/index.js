@@ -29,6 +29,7 @@ export const webchat = {
       boxShadow: '0 0 50px #C1CED7',
       overflow: 'hidden',
       fontFamily: 'Arial',
+      lineHeight: 1.3,
     },
 
     message: {

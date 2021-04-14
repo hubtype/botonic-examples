@@ -6,7 +6,6 @@ import Comment from '../assets/comment.svg'
 import { staticAsset } from '@botonic/react'
 
 const Header = styled.div`
-  cursor: pointer;
   height: 48px;
   background: #495e86;
   z-index: 2;
@@ -20,6 +19,7 @@ const Title = styled.h1`
   line-height: 1px;
   color: #ffffff;
   width: 80%;
+  margin: 0;
 `
 
 export const CustomHeader = () => {
