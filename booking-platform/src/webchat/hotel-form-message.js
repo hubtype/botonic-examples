@@ -98,7 +98,7 @@ class HotelForm extends React.Component {
     ]
     return (
       <Form>
-        <p style={{ fontSize: 10 }}>
+        <p style={{ fontSize: 10, marginBottom: '5px' }}>
           <em>
             We will not store the fulfilled information. You can fake the data.
           </em>
@@ -121,7 +121,7 @@ class HotelForm extends React.Component {
           }}
           style={{
             width: '100%',
-            padding: '0px 0px 5px 63px',
+            margin: '0px -63px 5px 0px',
           }}
           renderInput={params => (
             <MyTextField

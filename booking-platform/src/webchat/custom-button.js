@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const StyledButton = styled.div`
@@ -11,19 +11,14 @@ const StyledButton = styled.div`
   color: black;
   text-align: center;
   white-space: normal;
+  &:hover {
+    opacity: 0.5;
+  }
 `
 
 export const CustomButton = (props) => {
-  let [hover, setHover] = useState(false)
-
   return (
-    <StyledButton
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        opacity: hover ? '0.5' : '1',
-      }}
-    >
+    <StyledButton>
       {props.children}
     </StyledButton>
   )

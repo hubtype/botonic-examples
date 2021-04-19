@@ -8,6 +8,7 @@ import { PRIMARY_COLOR } from './constants'
 export const webchat = {
   storage: sessionStorage,
   storageKey: 'botonic-nlu-example',
+  shadowDOM: true,
 
   onInit: app => {
     app.clearMessages()

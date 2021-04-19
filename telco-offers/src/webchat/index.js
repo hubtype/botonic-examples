@@ -6,6 +6,7 @@ import { COLORS } from './constants'
 export const webchat = {
   storage: sessionStorage,
   storageKey: 'botonic-telco-example',
+  shadowDOM: true,
 
   onOpen: app => {
     app.clearMessages()
@@ -19,6 +20,7 @@ export const webchat = {
       width: 370,
       borderRadius: 10,
       background: '#F5F5F5',
+      lineHeight: 1.3,
     },
     header: {
       image: BotIconWhite,

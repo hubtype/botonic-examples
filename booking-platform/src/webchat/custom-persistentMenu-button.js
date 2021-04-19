@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { WebchatContext } from '@botonic/react'
 import { IconContainer } from './common'
@@ -11,6 +11,9 @@ const StyledButton = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+  &:hover {
+    opacity: 0.5;
+  }
 `
 
 const Text = styled.p`
@@ -18,10 +21,10 @@ const Text = styled.p`
   font-weight: 400;
   color: #000000;
   text-align: left;
+  margin: 0;
 `
 
 export const CustomMenuButton = (props) => {
-  let [hover, setHover] = useState(false)
   const { sendInput, openWebview } = useContext(WebchatContext)
 
   const handleClick = (event) => {
@@ -38,11 +41,6 @@ export const CustomMenuButton = (props) => {
   return (
     <StyledButton
       onClick={(e) => handleClick(e)}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        opacity: hover ? '0.5' : '1',
-      }}
     >
       <IconContainer>
         <img
