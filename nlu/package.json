@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "@botonic/plugin-nlu": "~0.18.0",
-    "@botonic/react": "~0.18.0",
+    "@botonic/react": "beta",
     "natural": "^2.1.5"
   },
   "devDependencies": {
