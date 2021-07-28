@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@botonic/plugin-nlu": "~0.18.0",
+    "@botonic/plugin-nlu": "beta",
     "@botonic/react": "beta",
     "axios": "^0.21.0",
     "leaflet": "^1.7.1",
@@ -51,12 +51,14 @@
     "jest": "^26.6.3",
     "node-sass": "^5.0.0",
     "null-loader": "^4.0.1",
+    "process": "^0.11.10",
     "react-hot-loader": "^4.13.0",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "terser": "^5.5.1",
     "terser-webpack-plugin": "^5.0.3",
+    "util": "^0.12.4",
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^4.0.0-beta.0"

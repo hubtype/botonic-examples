@@ -1,5 +1,5 @@
-import { WordEmbeddingsConfig } from '@botonic/nlu/dist/types'
-import { WordEmbeddingsManager } from '@botonic/nlu/dist/embeddings/word-embeddings-manager'
+import { WordEmbeddingsConfig } from '@botonic/nlu/lib/types'
+import { WordEmbeddingsManager } from '@botonic/nlu/lib/embeddings/word-embeddings-manager'
 
 import { layers, sequential, Sequential } from '@tensorflow/tfjs-node'
 import { DenseLayerArgs } from '@tensorflow/tfjs-layers/dist/layers/core'

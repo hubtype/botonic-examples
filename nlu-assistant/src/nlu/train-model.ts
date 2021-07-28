@@ -1,5 +1,5 @@
 import { BotonicNLU } from '@botonic/nlu'
-import { WordEmbeddingsConfig } from '@botonic/nlu/dist/types'
+import { WordEmbeddingsConfig } from '@botonic/nlu/lib/types'
 import { join } from 'path'
 import { train } from '@tensorflow/tfjs-node'
 import { DenseLayerArgs } from '@tensorflow/tfjs-layers/dist/layers/core'

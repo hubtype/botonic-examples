@@ -82,6 +82,9 @@ const resolveConfig = {
       'styled-components'
     ),
   },
+  fallback: {
+    util: require.resolve('util'),
+  },
 }
 
 const babelLoaderConfig = {
@@ -197,6 +200,9 @@ function botonicDevConfig(mode) {
         IS_BROWSER: true,
         IS_NODE: false,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
       }),
     ],
   }
