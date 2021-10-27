@@ -1,13 +1,9 @@
-import { tokenizer } from './nlu/preprocessing-tools/tokenizer'
-
 export const plugins = [
   {
-    id: 'nlu',
-    resolve: require('@botonic/plugin-nlu'),
+    id: 'intent-classification',
+    resolve: require('@botonic/plugin-intent-classification'),
     options: {
-      en: {
-        tokenizer: tokenizer,
-      },
+      locales: ['en'],
     },
   },
 ]
