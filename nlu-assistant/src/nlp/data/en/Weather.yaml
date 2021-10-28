@@ -1,0 +1,53 @@
+intent: Weather
+
+samples:
+  - tell me if it's cold outside
+  - will it be warm tomorrow
+  - I'd like to know the temperature
+  - do you know if it's cold now
+  - is it going to be chilly tomorrow
+  - temperature
+  - show me the temperature
+  - I'd like to know the temperature in London
+  - what will the temperature be in Munich on Monday
+  - do you know if it's cold outside now
+  - at New York is there cold
+  - today's temperature
+  - is it hot now
+  - temperature tonight
+  - temperature in Bangkok
+  - temperature in Moscow
+  - what's the temperature in Moscow in Celsius
+  - allright is it cold tonight in Aspen
+  - show me the temperature for this weekend
+  - check temperature
+  - how cold is it
+  - is there warm in New York
+  - chances of volcano eruption in Sicilia this month
+  - when will it rain today
+  - are there hurricanes expected
+  - is it going to snow in Paris on Sunday
+  - is it supposed to rain in Madrid next weekend
+  - is it supposed to snow on Friday
+  - is it going to be fog tomorrow in Paris
+  - is it going to rain
+  - will it be raining tomorrow
+  - is it going to rain this Friday
+  - is it supposed to snow today
+  - any snow in the forecast
+  - any chance of tornadoes on the weekend
+  - chances of storm
+  - when will it rain
+  - any chance of snow showers tomorrow in Barcelona
+  - what's the weather like?
+  - when will it rain in Oslo today
+  - is it supposed to rain in London
+  - are there freezing rains expected in Glasgow
+  - will it be foggy next Saturday in San Francisco
+  - is it supposed to snow
+  - what is the weather
+  - will it be foggy
+  - is it raining
+  - will it rain tomorrow in Paris
+  - any chance of thunderstorms in Colorado
+  - what is the weather forecast for snow in New York today

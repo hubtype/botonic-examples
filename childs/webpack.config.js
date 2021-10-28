@@ -7,12 +7,28 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack')
 
 const ROOT = path.resolve(__dirname, 'src')
+const NLP_DIRNAME = 'nlp'
 const ASSETS_DIRNAME = 'assets'
 const MODELS_DIRNAME = 'models'
+const TASKS_DIRNAME = 'tasks'
+
+const INTENT_CLASSIFICATION_DIRNAME = 'intent-classification'
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
 const WEBVIEWS_PATH = path.resolve(OUTPUT_PATH, 'webviews')
-const MODELS_PATH = path.join('nlu', MODELS_DIRNAME)
-const ASSETS_MODELS_PATH = path.join(ASSETS_DIRNAME, MODELS_DIRNAME)
+const TASKS_PATH = path.join(ROOT, NLP_DIRNAME, TASKS_DIRNAME)
+
+const INTENT_CLASSIFICATION_MODELS_PATH = path.join(
+  NLP_DIRNAME,
+  TASKS_DIRNAME,
+  INTENT_CLASSIFICATION_DIRNAME,
+  MODELS_DIRNAME
+)
+const INTENTS_ASSETS_MODELS_PATH = path.join(
+  ASSETS_DIRNAME,
+  TASKS_DIRNAME,
+  INTENT_CLASSIFICATION_DIRNAME,
+  MODELS_DIRNAME 
+)
 
 const BOTONIC_PATH = path.resolve(
   __dirname,
@@ -81,6 +97,9 @@ const resolveConfig = {
       'node_modules',
       'styled-components'
     ),
+  },
+  fallback: {
+    util: require.resolve('util'),
   },
 }
 
@@ -181,7 +200,7 @@ function botonicDevConfig(mode) {
     },
     resolve: resolveConfig,
     devServer: {
-      static: [OUTPUT_PATH, path.join(__dirname, 'src', MODELS_PATH)],
+      static: [OUTPUT_PATH, TASKS_PATH],
       liveReload: true,
       historyApiFallback: true,
       hot: true,
@@ -197,6 +216,12 @@ function botonicDevConfig(mode) {
         IS_BROWSER: true,
         IS_NODE: false,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
+        ...(mode === 'development'
+          ? { MODELS_BASE_URL: JSON.stringify('http://localhost:8080') }
+          : {}),
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
       }),
     ],
   }
@@ -309,7 +334,12 @@ function botonicNodeConfig(mode) {
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
       }),
       new CopyPlugin({
-        patterns: [{ from: MODELS_PATH, to: ASSETS_MODELS_PATH }],
+        patterns: [
+          {
+            from: INTENT_CLASSIFICATION_MODELS_PATH,
+            to: INTENTS_ASSETS_MODELS_PATH,
+          },
+        ],
       }),
     ],
   }

@@ -6,9 +6,8 @@ import Weather from './actions/Weather'
 import Thanks from './actions/Thanks'
 import NotFound from './actions/NotFound'
 
-const withConfidence = (input, intent) =>
-  input.intent === intent && input.confidence >= 0.6
-
+const withConfidence = (input, intent) => input.intents.some(int => int.label === intent && int.confidence >= 0.4)
+ 
 export const routes = [
   { input: i => withConfidence(i, 'Greetings'), action: Greetings },
   { input: i => withConfidence(i, 'Farewell'), action: Farewell },
