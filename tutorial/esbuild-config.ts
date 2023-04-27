@@ -1,18 +1,18 @@
-import fs from 'fs'
-import path from 'path'
+import fs, { readFileSync } from 'fs'
+import path, { join } from 'path'
 import esbuild from 'esbuild'
 import { sassPlugin } from 'esbuild-sass-plugin'
 import inlineImage from 'esbuild-plugin-inline-image'
 import imageminPlugin from 'esbuild-plugin-imagemin'
-const { htmlPlugin } = require('@craftamap/esbuild-plugin-html')
+import { htmlPlugin } from '@craftamap/esbuild-plugin-html'
+
+const distPath = join(__dirname, 'dist')
+if (!fs.existsSync(distPath)) {
+  fs.mkdirSync(distPath, { recursive: true })
+} else fs.rmSync(distPath, { recursive: true, force: true })
 
 const nodeEntryPoint = './esbuild-entries/node-entry.js'
 const nodeOutputFile = './dist/bot.js'
-
-const nodeOutputDir = path.dirname(nodeOutputFile)
-if (!fs.existsSync(nodeOutputDir)) {
-  fs.mkdirSync(nodeOutputDir, { recursive: true })
-}
 
 const nodeBundle: esbuild.BuildOptions = {
   entryPoints: [nodeEntryPoint],
@@ -32,11 +32,6 @@ const nodeBundle: esbuild.BuildOptions = {
 
 const webchatEntryPoint = './esbuild-entries/webchat-entry.js'
 const webchatOutputFile = './dist/webchat.botonic.js'
-
-const webchatOutputDir = path.dirname(webchatOutputFile)
-if (!fs.existsSync(webchatOutputDir)) {
-  fs.mkdirSync(webchatOutputDir, { recursive: true })
-}
 
 const webchatBundle: esbuild.BuildOptions = {
   entryPoints: [webchatEntryPoint],
@@ -58,12 +53,6 @@ const webchatBundle: esbuild.BuildOptions = {
 }
 
 const webviewsEntryPoint = './esbuild-entries/webviews-entry.js'
-const webviewsOutputFile = './dist/webviews/webviews.js'
-
-const webviewsOutputDir = path.dirname(webviewsOutputFile)
-if (!fs.existsSync(webviewsOutputDir)) {
-  fs.mkdirSync(webviewsOutputDir, { recursive: true })
-}
 
 const BOTONIC_PATH = path.resolve(
   __dirname,
@@ -88,8 +77,6 @@ const webviewsBundle: esbuild.BuildOptions = {
   bundle: true,
   minify: true,
   keepNames: true,
-  minifyWhitespace: true,
-  minifyIdentifiers: false,
   sourcemap: false,
   format: 'iife',
   globalName: 'BotonicWebview',
@@ -108,49 +95,20 @@ const webviewsBundle: esbuild.BuildOptions = {
     htmlPlugin({
       files: [
         {
-          entryPoints: [WEBVIEW_TEMPLATE_PATH],
+          entryPoints: [webchatEntryPoint],
           filename: 'index.html',
-          htmlTemplate: `
-          <html>
-          <head>
-            <title></title>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <style>
-              html,
-              body,
-              #root {
-                width: 100%;
-                height: 100%;
-                margin: 0px;
-                padding: 0px;
-              }
-            </style>
-            <script defer="defer" src="webviews.js"></script>
-          </head>
-          <body>
-            <script>
-              ;(function (d, s, id) {
-                var js,
-                  fjs = d.getElementsByTagName(s)[0]
-                if (d.getElementById(id)) {
-                  return
-                }
-                js = d.createElement(s)
-                js.id = id
-                js.src = 'https://connect.facebook.net/en_US/messenger.Extensions.js'
-                fjs.parentNode.insertBefore(js, fjs)
-              })(document, 'script', 'Messenger')
-            </script>
-            <div id="root"></div>
-            <script>
-              document.addEventListener('DOMContentLoaded', function (event) {
-                BotonicWebview.render(document.getElementById('root'))
-              })
-            </script>
-          </body>
-        </html>                    
-          `,
+          scriptLoading: 'defer',
+          extraScripts: [
+            {
+              src: 'webviews.js',
+              attrs: {
+                defer: '',
+              },
+            },
+          ],
+          htmlTemplate: readFileSync(WEBVIEW_TEMPLATE_PATH, {
+            encoding: 'utf-8',
+          }),
         },
       ],
     }),

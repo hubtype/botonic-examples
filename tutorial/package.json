@@ -2,8 +2,7 @@
   "name": "tutorial",
   "version": "1.0.0",
   "scripts": {
-    "esbuild": "ts-node ./esbuild-config.ts",
-    "build": "rm -rf ./dist; npm run esbuild;",
+    "build": "ts-node ./esbuild-config.ts",
     "build:old": "rm -rf ./dist; webpack --env target=all --mode=production;",
     "start": "webpack serve --env target=dev --mode=development",
     "test": "jest",
