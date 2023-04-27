@@ -50,6 +50,7 @@ const webchatBundle: esbuild.BuildOptions = {
   external: ['esbuild'],
   loader: {
     '.js': 'jsx',
+    '.ts': 'tsx',
   },
   define: { global: 'window' },
   assetNames: 'assets/[name]-[hash]',
@@ -85,14 +86,17 @@ const webviewsBundle: esbuild.BuildOptions = {
   platform: 'browser',
   outdir: './dist/webviews',
   bundle: true,
-  // TODO: if minify set to true, webviews break
-  minify: false,
+  minify: true,
+  keepNames: true,
+  minifyWhitespace: true,
+  minifyIdentifiers: false,
   sourcemap: false,
   format: 'iife',
   globalName: 'BotonicWebview',
   external: ['esbuild'],
   loader: {
     '.js': 'jsx',
+    '.ts': 'tsx',
   },
   metafile: true,
   define: { global: 'window' },
