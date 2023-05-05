@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { WebchatContext } from '@botonic/react'
 import { CustomMenuButton } from './custom-persistentMenu-button'
 import Home from '../assets/home.svg'
+import CheckReservation from "../assets/check-reservation.svg"
+import Close from "../assets/close.svg"
 import { staticAsset } from '@botonic/react'
 
 const ButtonsContainer = styled.div`
@@ -20,7 +22,7 @@ export const CustomPersistentMenu = ({ onClick, options }) => {
       <CustomMenuButton
         label={options[0].label}
         webview={options[0].webview}
-        img='https://www.flaticon.com/svg/static/icons/svg/14/14934.svg'
+        img={staticAsset(CheckReservation)}
       />
       <CustomMenuButton
         label={options[1].label}
@@ -30,7 +32,7 @@ export const CustomPersistentMenu = ({ onClick, options }) => {
       <CustomMenuButton
         label={options[2].closeLabel}
         onClick={onClick}
-        img='https://www.flaticon.com/svg/static/icons/svg/67/67345.svg'
+        img={staticAsset(Close)}
       />
     </ButtonsContainer>
   )
