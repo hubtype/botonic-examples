@@ -58,7 +58,7 @@ const BOTONIC_PATH = path.resolve(
   __dirname,
   'node_modules',
   '@botonic',
-  'react'
+  'react',
 )
 const TEMPLATES = {
   WEBCHAT: 'webchat.template.html',
@@ -67,7 +67,7 @@ const TEMPLATES = {
 const WEBVIEW_TEMPLATE_PATH = path.resolve(
   BOTONIC_PATH,
   'src',
-  TEMPLATES.WEBVIEWS
+  TEMPLATES.WEBVIEWS,
 )
 
 const webviewsBundle: esbuild.BuildOptions = {
@@ -117,7 +117,7 @@ const webviewsBundle: esbuild.BuildOptions = {
 
 esbuild.build(nodeBundle).catch(() => process.exit(1))
 esbuild.build(webchatBundle).catch(() => process.exit(1))
-esbuild.build(webviewsBundle).catch(e => {
+esbuild.build(webviewsBundle).catch((e) => {
   console.log(e)
   process.exit(1)
 })

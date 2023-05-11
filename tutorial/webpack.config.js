@@ -21,20 +21,22 @@ const INTENT_CLASSIFICATION_MODELS_PATH = path.join(
   NLP_DIRNAME,
   TASKS_DIRNAME,
   INTENT_CLASSIFICATION_DIRNAME,
-  MODELS_DIRNAME
+  MODELS_DIRNAME,
 )
 const INTENTS_ASSETS_MODELS_PATH = path.join(
   ASSETS_DIRNAME,
   TASKS_DIRNAME,
   INTENT_CLASSIFICATION_DIRNAME,
-  MODELS_DIRNAME 
+  MODELS_DIRNAME,
 )
 
 const BOTONIC_PATH = path.resolve(
   __dirname,
   'node_modules',
   '@botonic',
-  'react'
+  'react',
+  'lib',
+  'esm',
 )
 
 const WEBPACK_MODE = {
@@ -72,7 +74,7 @@ function sourceMap(mode) {
   else if (mode === WEBPACK_MODE.DEVELOPMENT) return 'eval-cheap-source-map'
   else
     throw new Error(
-      'Invalid mode argument (' + mode + '). See package.json scripts'
+      'Invalid mode argument (' + mode + '). See package.json scripts',
     )
 }
 
@@ -95,8 +97,10 @@ const resolveConfig = {
     'styled-components': path.resolve(
       __dirname,
       'node_modules',
-      'styled-components'
+      'styled-components',
     ),
+    'core-js': path.resolve('node_modules', 'core-js'),
+    aliasFields: ['browser'],
   },
   fallback: {
     util: require.resolve('util'),
@@ -207,7 +211,7 @@ function botonicDevConfig(mode) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(BOTONIC_PATH, 'src', TEMPLATES.WEBCHAT),
+        template: path.resolve(BOTONIC_PATH, TEMPLATES.WEBCHAT),
         filename: 'index.html',
       }),
       new webpack.HotModuleReplacementPlugin(),
@@ -251,7 +255,7 @@ function botonicWebchatConfig(mode) {
     resolve: resolveConfig,
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(BOTONIC_PATH, 'src', TEMPLATES.WEBCHAT),
+        template: path.resolve(BOTONIC_PATH, TEMPLATES.WEBCHAT),
         filename: 'index.html',
       }),
       imageminPlugin,
@@ -289,7 +293,7 @@ function botonicWebviewsConfig(mode) {
     resolve: resolveConfig,
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(BOTONIC_PATH, 'src', TEMPLATES.WEBVIEWS),
+        template: path.resolve(BOTONIC_PATH, TEMPLATES.WEBVIEWS),
         filename: 'index.html',
       }),
       imageminPlugin,
