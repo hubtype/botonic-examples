@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "ts-node ./esbuild-config.ts",
-    "build:old": "rm -rf ./dist; webpack --env target=all --mode=production;",
+    "build:webpack": "rm -rf ./dist; webpack --env target=all --mode=production;",
     "start:old": "esbuild ./esbuild-entries/webchat-entry.js --bundle --outdir=dist --serve",
     "start": "webpack serve --env target=dev --mode=development",
     "test": "jest",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@botonic/react": "0.22.0-alpha.1",
+    "@botonic/react": "0.22.0-alpha.2",
     "@types/node": "^18.16.1",
     "core-js": "^3.30.2"
   },

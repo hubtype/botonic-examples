@@ -6,6 +6,8 @@ import inlineImage from 'esbuild-plugin-inline-image'
 import imageminPlugin from 'esbuild-plugin-imagemin'
 import { htmlPlugin } from '@craftamap/esbuild-plugin-html'
 
+process.env.NODE_ENV = 'production'
+
 const distPath = join(__dirname, 'dist')
 if (!fs.existsSync(distPath)) {
   fs.mkdirSync(distPath, { recursive: true })
@@ -19,8 +21,9 @@ const nodeBundle: esbuild.BuildOptions = {
   platform: 'node',
   outfile: nodeOutputFile,
   bundle: true,
-  minify: false,
+  minify: true,
   sourcemap: true,
+  keepNames: true,
   format: 'cjs',
   external: ['esbuild'],
   loader: {
@@ -28,6 +31,8 @@ const nodeBundle: esbuild.BuildOptions = {
   },
   assetNames: 'assets/[name]-[hash]',
   plugins: [inlineImage(), sassPlugin()],
+  target: 'ES2018',
+  treeShaking: true,
 }
 
 const webchatEntryPoint = './esbuild-entries/webchat-entry.js'
@@ -40,6 +45,7 @@ const webchatBundle: esbuild.BuildOptions = {
   bundle: true,
   minify: true,
   sourcemap: false,
+  keepNames: true,
   format: 'iife',
   globalName: 'Botonic',
   external: ['esbuild'],
@@ -50,6 +56,7 @@ const webchatBundle: esbuild.BuildOptions = {
   define: { global: 'window' },
   assetNames: 'assets/[name]-[hash]',
   plugins: [imageminPlugin(), inlineImage(), sassPlugin({ type: 'style' })],
+  treeShaking: true,
 }
 
 const webviewsEntryPoint = './esbuild-entries/webviews-entry.js'
@@ -77,7 +84,7 @@ const webviewsBundle: esbuild.BuildOptions = {
   bundle: true,
   minify: true,
   keepNames: true,
-  sourcemap: false,
+  sourcemap: true,
   format: 'iife',
   globalName: 'BotonicWebview',
   external: ['esbuild'],
@@ -85,6 +92,7 @@ const webviewsBundle: esbuild.BuildOptions = {
     '.js': 'jsx',
     '.ts': 'tsx',
   },
+  treeShaking: true,
   metafile: true,
   define: { global: 'window' },
   assetNames: '../assets/[name]-[hash]',
@@ -117,7 +125,4 @@ const webviewsBundle: esbuild.BuildOptions = {
 
 esbuild.build(nodeBundle).catch(() => process.exit(1))
 esbuild.build(webchatBundle).catch(() => process.exit(1))
-esbuild.build(webviewsBundle).catch((e) => {
-  console.log(e)
-  process.exit(1)
-})
+esbuild.build(webviewsBundle).catch(() => process.exit(1))
