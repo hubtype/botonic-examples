@@ -2,7 +2,7 @@
   "name": "tutorial",
   "version": "1.0.0",
   "scripts": {
-    "build:esbuild": "ts-node ./esbuild-config.ts",
+    "build": "ts-node ./esbuild-config.ts",
     "build:webpack": "rm -rf ./dist; webpack --env target=all --mode=production;",
     "start": "webpack serve --env target=dev --mode=development",
     "start:esbuild:in-progress": "esbuild ./esbuild-entries/webchat-entry.js --bundle --outdir=dist --serve",
