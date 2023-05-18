@@ -1,4 +1,4 @@
-import fs, { readFileSync } from 'fs'
+import fs, { readFileSync, writeFileSync } from 'fs'
 import path, { join } from 'path'
 import esbuild from 'esbuild'
 import { sassPlugin } from 'esbuild-sass-plugin'
@@ -24,6 +24,7 @@ const nodeBundle: esbuild.BuildOptions = {
   minify: true,
   sourcemap: true,
   keepNames: true,
+  metafile: true,
   format: 'cjs',
   external: ['esbuild'],
   loader: {
@@ -47,6 +48,7 @@ const webchatBundle: esbuild.BuildOptions = {
   sourcemap: false,
   keepNames: true,
   format: 'iife',
+  metafile: true,
   globalName: 'Botonic',
   external: ['esbuild'],
   loader: {
@@ -123,6 +125,32 @@ const webviewsBundle: esbuild.BuildOptions = {
   ],
 }
 
-esbuild.build(nodeBundle).catch(() => process.exit(1))
-esbuild.build(webchatBundle).catch(() => process.exit(1))
-esbuild.build(webviewsBundle).catch(() => process.exit(1))
+async function botonicBundle() {
+  const nodeBundleResult = await esbuild
+    .build(nodeBundle)
+    .catch(() => process.exit(1))
+
+  fs.writeFileSync(
+    'meta-node-bundle.json',
+    JSON.stringify(nodeBundleResult.metafile),
+  )
+
+  const webchatBundleResult = await esbuild
+    .build(webchatBundle)
+    .catch(() => process.exit(1))
+
+  fs.writeFileSync(
+    'meta-webchat-bundle.json',
+    JSON.stringify(webchatBundleResult.metafile),
+  )
+  const webviewsBundleResult = await esbuild
+    .build(webviewsBundle)
+    .catch(() => process.exit(1))
+
+  fs.writeFileSync(
+    'meta-webviews-bundle.json',
+    JSON.stringify(webviewsBundleResult.metafile),
+  )
+}
+
+botonicBundle()
