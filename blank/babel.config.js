@@ -23,8 +23,6 @@ module.exports = {
     ],
   ],
   plugins: [
-    require('@babel/plugin-proposal-object-rest-spread'),
-    require('@babel/plugin-proposal-class-properties'),
     require('@babel/plugin-transform-runtime'),
   ],
 }
