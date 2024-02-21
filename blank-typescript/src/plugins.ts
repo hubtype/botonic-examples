@@ -1,3 +1,3 @@
-import { PluginConfig } from '@botonic/core'
+import type { PluginConfig } from '@botonic/core'
 
 export const plugins: PluginConfig<any>[] = []
