@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const ImageminPlugin = require('imagemin-webpack')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const ROOT = path.resolve(__dirname, 'src')
 const ASSETS_DIRNAME = 'assets'
@@ -145,16 +145,17 @@ const stylesLoaderConfig = {
   ],
 }
 
-const imageminPlugin = new ImageminPlugin({
-  bail: false,
-  cache: false,
-  imageminOptions: {
-    plugins: [
-      ['imagemin-gifsicle', { interlaced: true }],
-      ['imagemin-jpegtran', { progressive: true }],
-      ['imagemin-optipng', { optimizationLevel: 5 }],
-      ['imagemin-svgo', { removeViewBox: true }],
-    ],
+const imageminPlugin = new ImageMinimizerPlugin({
+  minimizer: {
+    implementation: ImageMinimizerPlugin.imageminMinify,
+    options: {
+      plugins: [
+        "imagemin-gifsicle",
+        "imagemin-jpegtran",
+        "imagemin-optipng",
+        "imagemin-svgo",
+      ],
+    },
   },
 })
 
