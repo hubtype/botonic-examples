@@ -23,6 +23,7 @@ module.exports = {
     ],
   ],
   plugins: [
+    require('@babel/plugin-transform-modules-commonjs'),
     require('@babel/plugin-transform-runtime'),
   ],
 }
