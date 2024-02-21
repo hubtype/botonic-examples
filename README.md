@@ -26,7 +26,7 @@ and select it from the selector.
       </a>
     </td>
     <td align="center">
-      <a href="https://botonic.io/examples/booking-platform/">🔗</a>
+      <a href="https://botonic-example-booking-platform.netlify.app/">🔗</a>
     </td>
     <td>
       This example shows you how to make a reservation in a hotel using a
@@ -54,7 +54,7 @@ and select it from the selector.
       </a>
     </td>
     <td align="center">
-      <a href="https://botonic.io/examples/telco-offers/">🔗</a>
+      <a href="botonic-example-telco-offers.netlify.app">🔗</a>
     </td>
     <td>
       This example shows you a multi-language conversation flow to acquire an Internet or a cell phone rate using buttons and replies.
