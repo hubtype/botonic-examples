@@ -11,14 +11,16 @@ import { routes } from '../src/routes'
 
 const app = new NodeApp({ routes, locales, plugins, ...config })
 
-const i = new BotonicInputTester(app)
-const o = new BotonicOutputTester(app)
+const session = { user: { id: '123' } }
+const input = new BotonicInputTester(app)
+const output = new BotonicOutputTester(app)
 
 test('TEST: hi.js', async () => {
-  await expect(i.text('Hi')).resolves.toBe(
-    o.text(
+  const response = await input.text('Hi', session)
+  await expect(response).toBe(
+    output.text(
       'Hi! Choose what you want to eat:',
-      o.replies(
+      output.replies(
         { text: 'Pizza', payload: 'pizza' },
         { text: 'Pasta', path: 'pasta' }
       )
@@ -27,10 +29,11 @@ test('TEST: hi.js', async () => {
 })
 
 test('TEST: pizza.js', async () => {
-  await expect(i.payload('pizza', {}, 'hi')).resolves.toBe(
-    o.text(
+  const response = await input.payload('pizza', session, 'hi')
+  expect(response).toBe(
+    output.text(
       'You chose Pizza! Choose one ingredient:',
-      o.replies(
+      output.replies(
         { text: 'Sausage', payload: 'sausage' },
         { text: 'Bacon', payload: 'bacon' }
       )
@@ -39,22 +42,25 @@ test('TEST: pizza.js', async () => {
 })
 
 test('TEST: sausage.js', async () => {
-  await expect(i.payload('sausage', {}, 'hi/pizza')).resolves.toBe(
-    o.text('You chose Sausage on Pizza')
+  const response = await input.payload('sausage', session, 'hi/pizza')
+  expect(response).toBe(
+    output.text('You chose Sausage on Pizza')
   )
 })
 
 test('TEST: bacon.js', async () => {
-  await expect(i.path('bacon', {}, 'hi/pizza')).resolves.toBe(
-    o.text('You chose Bacon on Pizza')
+  const response = await input.path('bacon', session, 'hi/pizza')
+  expect(response).toBe(
+    output.text('You chose Bacon on Pizza')
   )
 })
 
 test('TEST: pasta.js', async () => {
-  await expect(i.payload('pasta', {}, 'hi')).resolves.toBe(
-    o.text(
+  const response = await input.payload('pasta', session, 'hi')
+  expect(response).toBe(
+    output.text(
       'You chose Pasta! Choose one ingredient:',
-      o.replies(
+      output.replies(
         { text: 'Cheese', payload: 'cheese' },
         { text: 'Tomato', payload: 'tomato' }
       )
@@ -63,19 +69,22 @@ test('TEST: pasta.js', async () => {
 })
 
 test('TEST: cheese.js', async () => {
-  await expect(i.payload('cheese', {}, 'hi/pasta')).resolves.toBe(
-    o.text('You chose Cheese on Pasta')
+  const response = await input.payload('cheese', session, 'hi/pasta')
+  expect(response).toBe(
+    output.text('You chose Cheese on Pasta')
   )
 })
 
 test('TEST: tomato.js', async () => {
-  await expect(i.path('tomato', {}, 'hi/pasta')).resolves.toBe(
-    o.text('You chose Tomato on Pasta')
+  const response = await input.path('tomato', session, 'hi/pasta')
+  expect(response).toBe(
+    output.text('You chose Tomato on Pasta')
   )
 })
 
 test('TEST: (404) NOT FOUND', async () => {
-  await expect(i.text('whatever')).resolves.toBe(
-    o.text("I don't understand you")
+  const response = await input.text('whatever', session) 
+  expect(response).toBe(
+    output.text("I don't understand you")
   )
 })
