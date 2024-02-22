@@ -5,7 +5,6 @@ import {
   Pic,
   RequestContext,
   Subtitle,
-  Text,
   Title,
 } from '@botonic/react'
 import fetch from 'isomorphic-fetch'
