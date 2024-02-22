@@ -1,34 +1,15 @@
 const path = require('path')
 const webpack = require('webpack')
-const CopyPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const ImageminPlugin = require('imagemin-webpack')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const ROOT = path.resolve(__dirname, 'src')
-const NLP_DIRNAME = 'nlp'
 const ASSETS_DIRNAME = 'assets'
-const MODELS_DIRNAME = 'models'
-const TASKS_DIRNAME = 'tasks'
 
-const INTENT_CLASSIFICATION_DIRNAME = 'intent-classification'
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
 const WEBVIEWS_PATH = path.resolve(OUTPUT_PATH, 'webviews')
-const TASKS_PATH = path.join(ROOT, NLP_DIRNAME, TASKS_DIRNAME)
-
-const INTENT_CLASSIFICATION_MODELS_PATH = path.join(
-  NLP_DIRNAME,
-  TASKS_DIRNAME,
-  INTENT_CLASSIFICATION_DIRNAME,
-  MODELS_DIRNAME
-)
-const INTENTS_ASSETS_MODELS_PATH = path.join(
-  ASSETS_DIRNAME,
-  TASKS_DIRNAME,
-  INTENT_CLASSIFICATION_DIRNAME,
-  MODELS_DIRNAME 
-)
 
 const BOTONIC_PATH = path.resolve(
   __dirname,
@@ -121,8 +102,6 @@ const babelLoaderConfig = {
         ],
       ],
       plugins: [
-        '@babel/plugin-proposal-object-rest-spread',
-        '@babel/plugin-proposal-class-properties',
         '@babel/plugin-transform-runtime',
       ],
     },
@@ -165,16 +144,17 @@ const stylesLoaderConfig = {
   ],
 }
 
-const imageminPlugin = new ImageminPlugin({
-  bail: false,
-  cache: false,
-  imageminOptions: {
-    plugins: [
-      ['imagemin-gifsicle', { interlaced: true }],
-      ['imagemin-jpegtran', { progressive: true }],
-      ['imagemin-optipng', { optimizationLevel: 5 }],
-      ['imagemin-svgo', { removeViewBox: true }],
-    ],
+const imageminPlugin = new ImageMinimizerPlugin({
+  minimizer: {
+    implementation: ImageMinimizerPlugin.imageminMinify,
+    options: {
+      plugins: [
+        "imagemin-gifsicle",
+        "imagemin-jpegtran",
+        "imagemin-optipng",
+        "imagemin-svgo",
+      ],
+    },
   },
 })
 
@@ -200,7 +180,7 @@ function botonicDevConfig(mode) {
     },
     resolve: resolveConfig,
     devServer: {
-      static: [OUTPUT_PATH, TASKS_PATH],
+      static: [OUTPUT_PATH],
       liveReload: true,
       historyApiFallback: true,
       hot: true,
@@ -332,14 +312,6 @@ function botonicNodeConfig(mode) {
         IS_BROWSER: false,
         IS_NODE: true,
         HUBTYPE_API_URL: JSON.stringify(process.env.HUBTYPE_API_URL),
-      }),
-      new CopyPlugin({
-        patterns: [
-          {
-            from: INTENT_CLASSIFICATION_MODELS_PATH,
-            to: INTENTS_ASSETS_MODELS_PATH,
-          },
-        ],
       }),
     ],
   }

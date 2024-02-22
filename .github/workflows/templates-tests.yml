@@ -12,7 +12,7 @@ jobs:
       - name: Setting up node
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '20'
       - name: Setting up cache
         uses: actions/cache@v1
         with:
@@ -39,7 +39,7 @@ jobs:
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: custom-webchat
-        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
+        run: (cd $TEST_PATH && npm install -D --legacy-peer-deps && npm run build && npm run test)
       - name: dynamic-carousel build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
@@ -59,11 +59,6 @@ jobs:
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: intent
-        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: nlu build & test
-        env:
-          BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: nlu
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial build & test
         env:
