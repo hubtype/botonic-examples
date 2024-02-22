@@ -11,11 +11,12 @@ import { routes } from '../src/routes'
 
 const app = new NodeApp({ routes, locales, plugins, ...config })
 
-
 const input = new BotonicInputTester(app)
 const output = new BotonicOutputTester(app)
 
 test('TEST: (404) NOT FOUND', async () => {
   const response = await input.text('whatever')
-  expect(response).toBe(output.text("I don't understand you"))
+  expect(response).toBe(
+    output.text('Please, type "start" to start the tutorial.'),
+  )
 })
