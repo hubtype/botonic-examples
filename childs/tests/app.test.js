@@ -28,7 +28,7 @@ test('TEST: hi.js', async () => {
 })
 
 test('TEST: pizza.js', async () => {
-  const response = await input.payload('pizza', {}, 'hi')
+  const response = await input.payload('pizza', undefined, 'hi')
   expect(response).toBe(
     output.text(
       'You chose Pizza! Choose one ingredient:',
@@ -41,21 +41,21 @@ test('TEST: pizza.js', async () => {
 })
 
 test('TEST: sausage.js', async () => {
-  const response = await input.payload('sausage', {}, 'hi/pizza')
+  const response = await input.payload('sausage', undefined, 'hi/pizza')
   expect(response).toBe(
     output.text('You chose Sausage on Pizza')
   )
 })
 
 test('TEST: bacon.js', async () => {
-  const response = await input.path('bacon', {}, 'hi/pizza')
+  const response = await input.path('bacon', undefined, 'hi/pizza')
   expect(response).toBe(
     output.text('You chose Bacon on Pizza')
   )
 })
 
 test('TEST: pasta.js', async () => {
-  const response = await input.payload('pasta', {}, 'hi')
+  const response = await input.payload('pasta', undefined, 'hi')
   expect(response).toBe(
     output.text(
       'You chose Pasta! Choose one ingredient:',
@@ -68,21 +68,21 @@ test('TEST: pasta.js', async () => {
 })
 
 test('TEST: cheese.js', async () => {
-  const response = await input.payload('cheese', {}, 'hi/pasta')
+  const response = await input.payload('cheese', undefined, 'hi/pasta')
   expect(response).toBe(
     output.text('You chose Cheese on Pasta')
   )
 })
 
 test('TEST: tomato.js', async () => {
-  const response = await input.path('tomato', {}, 'hi/pasta')
+  const response = await input.path('tomato', undefined, 'hi/pasta')
   expect(response).toBe(
     output.text('You chose Tomato on Pasta')
   )
 })
 
 test('TEST: (404) NOT FOUND', async () => {
-  const response = await input.text('whatever', {}) 
+  const response = await input.text('whatever') 
   expect(response).toBe(
     output.text("I don't understand you")
   )
