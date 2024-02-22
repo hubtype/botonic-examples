@@ -24,7 +24,7 @@ module.exports = {
     '@babel/typescript',
   ],
   plugins: [
-    '@babel/plugin-transform-modules-commonjs',
-    '@babel/plugin-transform-runtime',
+    require('@babel/plugin-transform-modules-commonjs'),
+    require('@babel/plugin-transform-runtime'),
   ],
 }
