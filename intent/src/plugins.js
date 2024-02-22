@@ -1,7 +1,9 @@
+import * as pluginDialogflow from '@botonic/plugin-dialogflow'
+
 export const plugins = [
   {
     id: 'dialogflow',
-    resolve: require('@botonic/plugin-dialogflow'),
+    resolve: pluginDialogflow,
     // Copy-past here the generated JSON: https://dialogflow.com/docs/reference/v2-auth-setup
     options: {
       credentials: {
