@@ -11,12 +11,11 @@ import { routes } from '../src/routes'
 
 const app = new NodeApp({ routes, locales, plugins, ...config })
 
-const session = { user: { id: '123' } }
 const input = new BotonicInputTester(app)
 const output = new BotonicOutputTester(app)
 
 test('TEST: hi.js', async () => {
-  const response = await input.text('Hi', session)
+  const response = await input.text('Hi')
   await expect(response).toBe(
     output.text(
       'Hi! Choose what you want to eat:',
@@ -29,7 +28,7 @@ test('TEST: hi.js', async () => {
 })
 
 test('TEST: pizza.js', async () => {
-  const response = await input.payload('pizza', session, 'hi')
+  const response = await input.payload('pizza', {}, 'hi')
   expect(response).toBe(
     output.text(
       'You chose Pizza! Choose one ingredient:',
@@ -42,21 +41,21 @@ test('TEST: pizza.js', async () => {
 })
 
 test('TEST: sausage.js', async () => {
-  const response = await input.payload('sausage', session, 'hi/pizza')
+  const response = await input.payload('sausage', {}, 'hi/pizza')
   expect(response).toBe(
     output.text('You chose Sausage on Pizza')
   )
 })
 
 test('TEST: bacon.js', async () => {
-  const response = await input.path('bacon', session, 'hi/pizza')
+  const response = await input.path('bacon', {}, 'hi/pizza')
   expect(response).toBe(
     output.text('You chose Bacon on Pizza')
   )
 })
 
 test('TEST: pasta.js', async () => {
-  const response = await input.payload('pasta', session, 'hi')
+  const response = await input.payload('pasta', {}, 'hi')
   expect(response).toBe(
     output.text(
       'You chose Pasta! Choose one ingredient:',
@@ -69,21 +68,21 @@ test('TEST: pasta.js', async () => {
 })
 
 test('TEST: cheese.js', async () => {
-  const response = await input.payload('cheese', session, 'hi/pasta')
+  const response = await input.payload('cheese', {}, 'hi/pasta')
   expect(response).toBe(
     output.text('You chose Cheese on Pasta')
   )
 })
 
 test('TEST: tomato.js', async () => {
-  const response = await input.path('tomato', session, 'hi/pasta')
+  const response = await input.path('tomato', {}, 'hi/pasta')
   expect(response).toBe(
     output.text('You chose Tomato on Pasta')
   )
 })
 
 test('TEST: (404) NOT FOUND', async () => {
-  const response = await input.text('whatever', session) 
+  const response = await input.text('whatever', {}) 
   expect(response).toBe(
     output.text("I don't understand you")
   )

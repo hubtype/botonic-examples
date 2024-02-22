@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.9",
-    "@botonic/react": "0.25.0-alpha.4"
+    "@botonic/react": "0.25.0-alpha.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
