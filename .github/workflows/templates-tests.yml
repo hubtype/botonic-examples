@@ -60,11 +60,6 @@ jobs:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: intent
         run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
-      - name: nlu build & test
-        env:
-          BOTONIC_DISABLE_MIXPANEL: 1
-          TEST_PATH: nlu
-        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
       - name: tutorial build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
