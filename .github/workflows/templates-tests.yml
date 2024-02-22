@@ -39,7 +39,7 @@ jobs:
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
           TEST_PATH: custom-webchat
-        run: (cd $TEST_PATH && npm install -D && npm run build && npm run test)
+        run: (cd $TEST_PATH && npm install -D --legacy-peer-deps && npm run build && npm run test)
       - name: dynamic-carousel build & test
         env:
           BOTONIC_DISABLE_MIXPANEL: 1
